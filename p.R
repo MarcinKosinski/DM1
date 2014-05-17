@@ -3,6 +3,7 @@ library("MASS")
 library("rpart")
 library("klaR")
 library("glmnet")
+library("e1071")
 
 set.seed(476)
 se <- read.arff("http://archive.ics.uci.edu/ml/machine-learning-databases/00266/seismic-bumps.arff")
@@ -114,3 +115,26 @@ mod_tree <- rpart(class~.,data=tren)
 plot(mod_tree)
 text(mod_tree)
 
+pred <- predict(mod_tree,newdata=test,type="class")
+t <- table(test$class,pred)
+sum(diag(t))/nrow(test)*100 
+t
+
+czulosc <- t[2,2]/(sum(t[2,]))
+czulosc
+precyzja <- t[2,2]/sum(t[,2])
+precyzja
+
+# svm
+
+mod <- svm(class~.,data=tren,type="C",kernel="sigmoid")
+pred <- predict(mod,test[,-14])
+
+t <- table(test$class,pred)
+sum(diag(t))/nrow(test)*100 
+t
+
+czulosc <- t[2,2]/(sum(t[2,]))
+czulosc
+precyzja <- t[2,2]/sum(t[,2])
+precyzja
