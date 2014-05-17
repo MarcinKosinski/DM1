@@ -4,6 +4,12 @@ col2 <- colorRampPalette(c("#67001F", "#B2182B", "#D6604D", "#F4A582", "#FDDBC7"
 #install.packages("corrplot")
 par(mfrow=c(1,2))
 library(corrplot)
+library(corrplot)
+library("foreign")
+library("MASS")
+library("rpart")
+#install.packages("klaR")
+library("klaR")
 
 
 se <- read.arff("http://archive.ics.uci.edu/ml/machine-learning-databases/00266/seismic-bumps.arff")
