@@ -1,0 +1,6 @@
+\chapter{Metoda SVM}
+\thispagestyle{fancy}
+<<>>=
+plot(rnorm(10), 1:10)
+@
+

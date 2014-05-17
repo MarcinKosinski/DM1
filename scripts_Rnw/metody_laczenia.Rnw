@@ -1,0 +1,6 @@
+\chapter{Metody ³±czenia drzew decyzyjnych}
+\thispagestyle{fancy}
+<<>>=
+cor(iris[1:4])
+@
+

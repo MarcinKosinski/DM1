@@ -1,0 +1,6 @@
+\chapter{Metoda knn}
+\thispagestyle{fancy}
+<<>>=
+rnorm(10)
+@
+

@@ -1,0 +1,6 @@
+\chapter{LDA i QDA}
+\thispagestyle{fancy}
+<<>>=
+letters[1:12]
+@
+

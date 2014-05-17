@@ -1,0 +1,6 @@
+\chapter{Naiwny Klasyfikator Bayesa}
+\thispagestyle{fancy}
+<<>>=
+cos(30)
+@
+
