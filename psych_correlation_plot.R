@@ -15,3 +15,10 @@ pairs.panels(sat.act,pch=".", main="giwo")
 #show many variables with 0 gap between scatterplots
 # data(bfi)
 # pairs.panels(bfi,show.points=FALSE,gap=0)
+
+
+
+pairs.panels(se[,-c(1:3,8:12,14)],bg=c("yellow","blue")[se$class],
+                              pch=21, cex=0.8, font.labels=2, cex.labels=1.9,
+             main="Macierz korelacji", cex.main=2)
+
