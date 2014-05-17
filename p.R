@@ -2,7 +2,9 @@ library("foreign")
 library("MASS")
 library("rpart")
 library("klaR")
+library("glmnet")
 
+set.seed(476)
 se <- read.arff("http://archive.ics.uci.edu/ml/machine-learning-databases/00266/seismic-bumps.arff")
 se <- se[,-c(14:16,18,9)]
 head(se,2)
@@ -62,4 +64,53 @@ czulosc <- t[2,2]/(sum(t[2,]))
 czulosc
 precyzja <- t[2,2]/sum(t[,2])
 precyzja
+
+# logistyczna
+
+mod_log <- glm(class~.,data=tren,family="binomial")
+
+pred <- ifelse(predict(mod_log,newdata=test,type="response")>0.5,1,0) 
+t <- table(test$class,pred)
+sum(diag(t))/nrow(test)*100 
+t
+
+czulosc <- t[2,2]/(sum(t[2,]))
+czulosc
+precyzja <- t[2,2]/sum(t[,2])
+precyzja
+
+aic <- step(mod_log,direction="backward",k=2)
+# class ~ seismic + gpuls + nbumps2 + nbumps3
+anova(aic,mod_log,test="Chisq")
+
+mod_log_aic <- glm(aic$formula,data=tren,family="binomial")
+
+pred <- ifelse(predict(mod_log_aic,newdata=test,type="response")>0.5,1,0) 
+t <- table(test$class,pred)
+sum(diag(t))/nrow(test)*100 
+t
+
+czulosc <- t[2,2]/(sum(t[2,]))
+czulosc
+precyzja <- t[2,2]/sum(t[,2])
+precyzja
+
+# ???????????????????????????????????
+
+cv.glmnet(as.matrix(tren_r[,1:13]),ifelse(tren_r$class=="1",1,0))
+mod_log_reg <- glmnet(as.matrix(tren_r[,1:13]),tren_r[,14],family="binomial",
+                      alpha=0,lambda.min=0.007049594)
+plot(mod_log_reg)
+coef(mod_log_reg)
+
+pred <- ifelse(predict(mod_log_reg,newx=as.matrix(test_r[,1:13])
+                       ,type="response")>0.5,1,0) 
+
+# ????????????????????????????????????????????????????????
+
+# drzewo
+
+mod_tree <- rpart(class~.,data=tren)
+plot(mod_tree)
+text(mod_tree)
 
