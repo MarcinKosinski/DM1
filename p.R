@@ -4,21 +4,33 @@ library("rpart")
 library("klaR")
 
 se <- read.arff("http://archive.ics.uci.edu/ml/machine-learning-databases/00266/seismic-bumps.arff")
+se <- se[,-c(14:16)]
 head(se)
-any(is.na(se))
+
+# podzial na probe testowa i treningowa:
 
 dim(se)
+ile <- floor((2/3)*dim(se)[1])
+s <- sample(1:dim(se)[1],ile)
+tren <- se[s,]
+test <- se[-s,]
 
-mod <- lda(class~.-nbumps-nbumps6-nbumps7-nbumps89,data=se)
-tree <- rpart(class~.-nbumps-nbumps6-nbumps7-nbumps89,data=se)
-par(oma=c(rep(0.1,4)))
-plot(tree)
-text(tree)
+# bedziemy budowac model na treningowej, a testowac na testowej :D
 
-ncol(se)
-stepclass(se[,c(1:8,10:18)],se[,19],method="qda",direction="forward")
-warnings()
+# model buduje bez zmiennych maxenergy i nbumps, bo sa skorelowane z innymi
+# i bez zmiennych nbumps6, 7 i 89, bo byly cale zerowe
 
-apply(se[9:17],2,sum)
+# lda
 
-install.GitHub()
+mod_lda <- lda(class ~ seismic +seismoacoustic +shift +genergy +gpuls +gdenergy +
+               gdpuls +ghazard +nbumps2 +nbumps3 +nbumps4 +nbumps5 +energy,
+               data=tren)
+pred <- predict(mod_lda, newdata=test)$class
+pred
+table(pred)
+
+
+
+
+
+

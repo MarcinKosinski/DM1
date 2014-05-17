@@ -59,20 +59,17 @@ summary(se[,c(1:3,8)])
 
 \subsection{Zmienne ilo¶ciowe}
 <<>>=
-summary(se[,-c(1:3,8,19)])
-apply(se[,-c(1:3,8,19)],2,shapiro.test)
+summary(se[,-c(1:3,8,16)])
+apply(se[,-c(1:3,8,16)],2,shapiro.test)
+cor(se[,-c(1:3,8,16)],method="spearman")
 @
 
 \subsection{Zmienna obja¶niana}
 <<>>=
-summary(se[,19])
+summary(se[,16])
 @
 
 
-<<>>=
-x<- 1:10
-x^2
-@
 
 
 
