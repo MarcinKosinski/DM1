@@ -3,7 +3,7 @@
 \usepackage{polski}
 \usepackage[T1]{fontenc}
 \usepackage[latin2]{inputenc} 
-\usepackage[top=1.5cm, bottom=1.5cm, left=0.95cm, right=0.95cm]{geometry}
+\usepackage[top=1.5cm, bottom=1.5cm, left=1.5cm, right=1.5cm]{geometry}
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \usepackage[Bjornstrup]{fncychap}
@@ -34,6 +34,10 @@
 \thispagestyle{fancy}
 <<echo=FALSE>>=
 opts_chunk$set(comment="", message=FALSE,fig.width=8, fig.height=6,tidy.opts=list(keep.blank.line=TRUE, width.cutoff=120),options(width=100))
+@
+
+<<child="scripts_Rnw/intro.Rnw">>=
+
 @
 
 <<child="scripts_Rnw/pakiety_dane.Rnw">>=

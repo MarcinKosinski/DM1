@@ -8,13 +8,6 @@ summary(x,x^3,x^x)
 @
 
 
-\section{Motywacja}
-
-\section{Opis danych} 
-<<>>=
-head(se)
-@
-
 \section{Podstawowe charakterystyki zmiennych}
 \begin{landscape}
 \subsection{Zmienne ilo¶ciowe}
