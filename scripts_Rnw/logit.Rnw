@@ -1,4 +1,4 @@
-\chapter{Regresja logistyczna + regularyzacja}
+\chapter{Regresja logistyczna i regularyzacja}
 \thispagestyle{fancy}
 \section{Model pe³ny}
 Po wybraniu zbioru testowego i treningowego w proporcjach 1:2 przeprowadzono regresjê logistyczn± i wywo³ano podsumowanie pe³nego modelu regresji logistycznej.
@@ -89,7 +89,22 @@ Warto¶ci poprawno¶ci dopasowania w ka¿dym z modeli wychodz± bardzo wysokie. Rzêd
 <<>>=
 formatC(c(P[1:5],P.aic[1:5],P.bic[1:5]), digits=3, format="f")
 @
-?paste
+\subsection{Kroswalidacja}
+Prawdopodobieñstwo poprawnej klasyfikacji na podstawie kroswalidacji dla mode³u pe³nego:
+<<>>=
+Pop <- numeric(nrow(se_wyb))
+
+for(i in 1:nrow(se_wyb)){
+   gi  <- glm(class~.,data=se_wyb[-c(i),],family="binomial")
+   Pi  <- predict(gi,type="response",newdata=se_wyb[c(i),])
+   Predi=ifelse(Pi>0.5,1,0)
+   Pop[i]=ifelse(Predi==se_wyb$class[i],1,0)
+}
+
+
+sum(Pop)/nrow(se_wyb)
+@
+
 \section{Uwaga! na nisk± jako¶æ dopasowania}
 Modele dopasowane w poprzednim podrozdziale nie s± poprawne pomimo, ¿e b³±d klasyfikacji w ka¿dym z przypadków wynosi³ po 6\%. Proszê spojrzeæ na tabelê klasyfikacyj± w ka¿dym z tych modeli:
 <<>>=
@@ -98,3 +113,23 @@ Tab.aic
 Tab.bic
 @
 W ka¿dym z modelu oko³o 50 przypadków wyst±pieñ silnych wstrz±sów przy nastêpnej zmianie za³ogi górnikow nie zosta³o poprawnie zaklasyfikowanych. Oznacza to, ¿e nasz klasyfikator jest b³êdny i klasyfikuje wszystkie przypadki do cechy 0, oznaczaj±cej, ¿e niebezpieczeñstwa nie bêdzie i ¿e silne wstrz±sy nie nast±pi±. Pomimo ma³ego b³êdu predykcji klasyfikator oparty na modelu regresji liniowej jest nieadekwatny i b³êdny.
+\section{Regularyzowana wersja regresji logistycznej}
+<<eval=FALSE>>=
+rlas<-glmnet(se_wyb[,-14], se_wyb[,14],  family = "binomial", alpha = 0,  lambda.min = 1e-4)
+plot(rlas)
+@
+Nie dzia³a powy¿ej
+<<eval=FALSE>>=
+cv1 = cv.glmnet(se_wyb[,-14], se_wyb[,14])
+
+nsteps <- 10
+b1 <- coef(rlas)[-1, 1:nsteps]
+w <- nonzeroCoef(b1)
+b1 <- as.matrix(b1[w, ])
+
+
+matplot(1:nsteps, t(b1), type = "o", pch = 19, col = "blue", xlab = "Step", ylab = "Coefficients", lty = 1)
+title("Lasso")
+abline(h = 0, lty = 2)
+@
+

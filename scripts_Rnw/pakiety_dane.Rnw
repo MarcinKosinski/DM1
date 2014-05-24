@@ -3,6 +3,7 @@ library("foreign")
 library("MASS")
 library("rpart")
 library("klaR")
+library("glmnet")
 se <- read.arff("http://archive.ics.uci.edu/ml/machine-learning-databases/00266/seismic-bumps.arff")
 se <- se[,-c(14:16)]
 se_wyb <- se[,-c(9,15)]
