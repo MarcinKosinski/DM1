@@ -12,5 +12,41 @@ Odpowiednio dobra predykcja wzrostu aktywno¶ci seismicznej jest nies³ychanie ist
 \section{Opis zmiennych w zbiorze}
 Zbiór u¿yty do analizy cechuje siê niezbalansowanym rozk³adem przypadków wystêpowania i braku wystêpowania cechy, dla której ma byæ zadana predykcja. Na blisko ponad 2000 przypadków, tylko 170 to przypadki reprezentuj±ce klasê 1. Bêdzie to g³ówny problem przewijaj±cy siê w ca³ej analizie danych.
 
+\begin{table}[h]
+\label{tab:opis2}
+\caption{Opis zmiennych ze zbioru \texttt{Seismic-bumps}.}
+\begin{center}
+\begin{tabular}{lp{10cm}}
+\toprule%
+Zmienna  &  Opis \\ \toprule%
+seismic  &  wynik oceny zagro¿enia sejsmicznego na zmianie oszacowany metod± \texttt{seismic}   \\ 
+seismoacoustic  &  wynik oceny zmiany zagro¿enia sejsmicznego na zmianie oszacowany metod± \texttt{seismoacoustic}   \\ 
+shift & informacja na temat typu zmiany, (W - bior±cych wêgiel, N - ekipa techniczna) \\
+genergy & energia seismiczna zarejestrowana\footnotemark[1] przez najbardziej aktywny geofon (GMax) spo¶ród geofonów monitoruj±cych tunel \\
+gpuls & liczba drgañ zarejestrowana\footnotemark[1] przez Gmax \\
+gdenergy & odchylenie energii zarejestrowanej\footnotemark[1] przez Gmax od ¶redniej energii zarejestrowanej podczas ostatnich 8 zmian \\
+gdpuls & odchylenie liczby drgañ zarejestrowanej\footnotemark[1] przez Gmax od ¶redniej liczby drgañ zarejestrowanej podczas ostatnich 8 zmian \\
+ghazard & wynik oceny zmiany zagro¿enia sejsmicznego na zmianie oszacowany metod± \texttt{seismoacoustic} tylko z geofonu Gmax \\
+nbumps & liczba wstrzasów seismicznych\footnotemark[1] \\ 
+nbumps2 & liczba wstrzasów seismicznych\footnotemark[1] w zakresie $[10^2,10^{3})$  \\
+nbumps3 & liczba wstrzasów seismicznych\footnotemark[1] w zakresie $[10^3,10^{4})$  \\
+nbumps4 & liczba wstrzasów seismicznych\footnotemark[1] w zakresie $[10^4,10^{5})$  \\
+nbumps5 & liczba wstrzasów seismicznych\footnotemark[1] w zakresie $[10^5,10^{6})$  \\
+nbumps6 & liczba wstrzasów seismicznych\footnotemark[1] w zakresie $[10^6,10^{7})$  \\
+nbumps7 & liczba wstrzasów seismicznych\footnotemark[1] w zakresie $[10^7,10^{8})$ \\
+nbumps89 & liczba wstrzasów seismicznych\footnotemark[1] w zakresie $[10^8,10^{10})$  \\
+energy & ca³kowita energia wstrz±sów seismicznych\footnotemark[1] \\
+maxenergy & ca³kowita energia wstrz±sów seismicznych\footnotemark[1] \\
+class & czy wyst±pi³ silny wstrz±s podczas nastêpnej wizyty \\ \bottomrule
+\end{tabular}
+
+
+\end{center}
+\end{table}
+\footnotetext[1]{Zarejestrowana podczas poprzedniej zmiany}
+
+
+
 \section{Szczegó³y techniczne pracy}
+
 

@@ -14,6 +14,10 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage{float}
 \usepackage{hyperref} %pakiet do dodawania hiper³±cz
 \hypersetup{colorlinks=true,
             linkcolor=blue,
