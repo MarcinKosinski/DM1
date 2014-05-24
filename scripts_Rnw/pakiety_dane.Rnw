@@ -5,5 +5,10 @@ library("rpart")
 library("klaR")
 se <- read.arff("http://archive.ics.uci.edu/ml/machine-learning-databases/00266/seismic-bumps.arff")
 se <- se[,-c(14:16)]
+se_wyb <- se[,-c(9,15)]
+set.seed(456)
+ind <- sample(1:nrow(se_wyb), nrow(se_wyb)*2/3)
+Train  <-  se_wyb[ind,]
+Test  <-  se[-ind,]
 @
 

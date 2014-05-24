@@ -8,7 +8,7 @@ Górnictwo od zawsze by³o i nadal jest po³±czone z wyst±pieniami zagro¿eñ czêsto 
 \paragraph{} Z racji na realne zagro¿enie ¿ycia ze strony wstrz±sów seismicznych, istotnym jest poszukiwanie nowych mo¿liwo¶ci lepszego wykrywania zagro¿enia, miêdzy innymi przy u¿yciu metod uczenia maszynowego. Jest to dziedzina wci±¿ rozwijana, gdy¿ obecnie u¿ywane metody s± wci±¿ niewystarczaj±ce i nie maj± odpowiedniej dok³adno¶ci i czu³o¶ci na predykcjê wystêpowania wstrz±sów seismicznych.
 \paragraph{}
 Odpowiednio dobra predykcja wzrostu aktywno¶ci seismicznej jest nies³ychanie istotna w problemach praktycznych. Dlatego zdecydowwali¶my przyjrzeæ sie zbiorowi danych dotycz±cemu realnych problemów z który zmaga siê ¶wiat i wspó³czesna statystyka stosowana.
-
+\newpage
 \section{Opis zmiennych w zbiorze}
 Zbiór u¿yty do analizy cechuje siê niezbalansowanym rozk³adem przypadków wystêpowania i braku wystêpowania cechy, dla której ma byæ zadana predykcja. Na blisko ponad 2000 przypadków, tylko 170 to przypadki reprezentuj±ce klasê 1. Bêdzie to g³ówny problem przewijaj±cy siê w ca³ej analizie danych.
 
