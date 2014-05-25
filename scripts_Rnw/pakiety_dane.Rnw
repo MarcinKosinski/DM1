@@ -6,6 +6,8 @@ library("rpart")
 library("klaR")
 library("glmnet")
 library("ROCR")
+if(!require(parallel)) { 
+install.packages("parallel"); require(parallel)}
 
 se <- read.arff("http://archive.ics.uci.edu/ml/machine-learning-databases/00266/seismic-bumps.arff")
 
@@ -13,4 +15,5 @@ se <- se[,-c(14:16)]
 se_wyb <- se[,-c(9,15)]
 
 @
+
 

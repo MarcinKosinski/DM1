@@ -1,13 +1,9 @@
 \chapter{LDA i QDA}
 \thispagestyle{fancy}
 
-\section{LDA}
-
+\section{Liniowa analiza dyskryminacyjna - LDA}
+\subsection{Dopasowanie modelu i predykcja}
 Dopasujmy model lda do naszych danych na zbiorze treningowym:
-
-<<echo=FALSE>>=
-library("MASS")
-@
 
 
 <<>>=
@@ -34,7 +30,7 @@ A procent poprawnego dopasowania nastêpuj±co:
 proc <- 100*sum(diag(t))/sum(t)
 proc
 @
-
+\subsection{Ocena jako¶ci klasyfikacji}
 Mimo ¿e procent poprawnej klasyfikacji jest bardzo wysoki (ponad $92\%$), to nie mo¿emy tu mówiæ o dobrym klasyfikatorze. Wyra¼nie widaæ, ¿e nasz LDA klasyfikuje prawie wszystkie obserwacje jako $0$, a przez fakt, ¿e nasza próba nie jest symetryczna (zera stanowi± znaczn± wiêkszo¶æ próby) osi±gamy wysoki procent poprawnej klasyfikacji. O tym, ¿e rzeczywi¶cie model nie jest najlepszy powiedz± nam równie¿ czu³o¶æ i precyzja:
 
 <<cache=TRUE>>=
@@ -45,7 +41,7 @@ czulosc; precyzja
 @
 
 Czu³o¶æ i precyzja wynosz± odpowiednio $25\%$ i $12\%$. Jest wiêc bardzo s³abo. 
-
+\subsection{Kroswalidacja dla LDA}
 Sprawd¼my jeszcze jako¶æ dopasowanego modelu przeprowadzaj±c kroswalidacjê dziesiêtnokrotn±:
 
 <<cache=TRUE>>=
@@ -74,11 +70,10 @@ mean(precyzja)
 
 @
 
-Czu³o¶æ i precyzja nieco siê poprawi³y. I na koniec wyznaczmy krzyw± ROC:
+Czu³o¶æ i precyzja nieco siê poprawi³y. 
+\subsection{Krzywa ROC i wspó³czynnik AUC}
+I na koniec wyznaczmy krzyw± ROC:
 
-<<echo=FALSE,warning=FALSE>>=
-library("ROCR")
-@
 
 <<>>=
 mod_lda <- lda(class~., data=Train)

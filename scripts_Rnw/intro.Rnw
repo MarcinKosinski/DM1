@@ -40,6 +40,9 @@ maxenergy & ca³kowita energia wstrz±sów seismicznych\footnotemark[1] \\
 class & czy wyst±pi³ silny wstrz±s podczas nastêpnej wizyty \\ \bottomrule
 \end{tabular}
 
+<<>>=
+
+@
 
 \end{center}
 \end{table}

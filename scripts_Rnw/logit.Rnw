@@ -91,7 +91,7 @@ formatC(c(P[1:5],P.aic[1:5],P.bic[1:5]), digits=3, format="f")
 @
 \subsection{Kroswalidacja}
 Prawdopodobieñstwo poprawnej klasyfikacji na podstawie kroswalidacji dla mode³u pe³nego:
-<<cache=TRUE>>=
+<<kroswalidacja,cache=TRUE>>=
 Pop <- numeric(nrow(se_wyb))
 
 for(i in 1:nrow(se_wyb)){
