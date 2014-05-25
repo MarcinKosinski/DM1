@@ -4,6 +4,9 @@
 \section{Liniowa analiza dyskryminacyjna - LDA}
 \subsection{Dopasowanie modelu i predykcja}
 Dopasujmy model lda do naszych danych na zbiorze treningowym:
+<<>>=
+library("MASS")
+@
 
 
 <<>>=
