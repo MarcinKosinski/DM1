@@ -1,4 +1,4 @@
-<<echo=FALSE,cache=TRUE,warning=FALSE>>=
+<<echo=FALSE,warning=FALSE>>=
 
 library("foreign")
 library("MASS")
@@ -15,5 +15,3 @@ se <- se[,-c(14:16)]
 se_wyb <- se[,-c(9,15)]
 
 @
-
-

@@ -90,8 +90,10 @@ Warto¶ci poprawno¶ci dopasowania w ka¿dym z modeli wychodz± bardzo wysokie. Rzêd
 formatC(c(P[1:5],P.aic[1:5],P.bic[1:5]), digits=3, format="f")
 @
 \subsection{Kroswalidacja}
+Z racji na du¿y zbiór danych, aby przyspieszyæ kroswalidacjê, dziêki pakietowi \texttt{parallel} stworzono odpowiedni klaster obliczeniowy, rozdzielaj±cy obliczenia na tyle w±tków ile jest na procesorze rdzeni.
 Prawdopodobieñstwo poprawnej klasyfikacji na podstawie kroswalidacji dla mode³u pe³nego:
 <<kroswalidacja,cache=TRUE>>=
+kros <- function(k=0){
 Pop <- numeric(nrow(se_wyb))
 
 for(i in 1:nrow(se_wyb)){
@@ -100,9 +102,21 @@ for(i in 1:nrow(se_wyb)){
    Predi=ifelse(Pi>0.5,1,0)
    Pop[i]=ifelse(Predi==se_wyb$class[i],1,0)
 }
-
-
-sum(Pop)/nrow(se_wyb)
+return(sum(Pop)/nrow(se_wyb))
+}
+# klaster obliczeniowy
+require(parallel)
+cl <- makeCluster(detectCores())
+@
+<<klustrowanie,results='hide', cache=TRUE>>=
+clusterEvalQ(cl, library("foreign"))
+clusterEvalQ(cl,se <- read.arff("http://archive.ics.uci.edu/ml/machine-learning-databases/00266/seismic-bumps.arff"))
+clusterEvalQ(cl,se <- se[,-c(14:16)])
+clusterEvalQ(cl,se_wyb <- se[,-c(9,15)])
+@
+<<obliczeniaklastrowe>>=
+parLapply(cl, 1, kros)
+stopCluster(cl)
 @
 
 \section{Uwaga! na nisk± jako¶æ dopasowania}
