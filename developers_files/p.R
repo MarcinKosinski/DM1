@@ -138,3 +138,39 @@ czulosc <- t[2,2]/(sum(t[2,]))
 czulosc
 precyzja <- t[2,2]/sum(t[,2])
 precyzja
+
+
+
+##############################################################
+
+\subsection{Zmienna objaśniana}
+<<>>=
+   summary(se[,16])
+@
+
+\section{Usunięcie braków danych, wstępna selekcja}
+
+W naszych danych nie występują braki danych.
+
+\bigskip
+
+Na pierwszy rzut oka widać, że niektóre zmienne są zupełnie nieistotne lub bardzo ze sobą skorelowane, dlatego chcielibyśmy wyłączyć je od razu z analizy. Przyjrzyjmy się naszym danym:
+   
+   <<echo=FALSE>>=
+   se <- read.arff("http://archive.ics.uci.edu/ml/machine-learning-databases/00266/seismic-bumps.arff")
+head(se,3)
+@
+
+\bigskip
+
+Zacznijmy od zmiennych \textit{nbumps6, nbumps7} oraz \textit{nbumps89}. Są to zmienne ilościowe, wszystkie jednak przyjmują wartość zero. Niczego więc nie wnoszą one do naszej analizy. Zastąpmy je więc przez zmienną \textit{nbumps5} (a raczej rozszerzmy definicję zmiennej \textit{nbumps5}), która będzie od tej pory definiować liczbę wstrzasów seismicznych w zakresie $[10^5,10^{10})$. 
+
+\bigskip
+
+Kolejną zmienną, którą usuniemy z analizy będzie zmienna \textit{nbumps}, która jest liniowo zależna od zmiennych \testit{nbumps2, nbumps3, nbumps4} i \textit{nbumps5}.
+
+\bigskip
+
+Zajmijmy się jeszcze zmiennymi nominalnymi. Niestety nie każda metoda, którą będziemy stosować do analizy (np. QDA) dobrze sobie z nimi radzi. Będziemy więc pracować na dwóch zestawach danych. Tam, gdzie się da, będziemy korzystać z danych oryginalnych. W reszcie metod zamienimy sobie dane nominalny na dane ilościowe w następujący sposób:
+   
+   Zmienną \textit{seismic} przyjmującą wartości ze zbioru ${a,b,c,d}$ zamienimy na zmienną \textit{seismic2} przyjmuącą wartości ${0,1,2,3}$. W analogiczny sposób zamienimy zmienną \textit{sesismoacoustic} na zmienną \textit{sesismoacoustic2} oraz zmienną \textit{ghazard} na zmienną \textit{ghazard2}

@@ -3,45 +3,156 @@
 
 \section{LDA}
 
-Dopasujmy model lda do naszych danych. Tabela reklasyfikacji na zbiorze testowym wygl±da nastêpuj±co:
+Dopasujmy model lda do naszych danych na zbiorze treningowym:
 
-<<echo=FALSE, cache=TRUE>>=
+<<echo=FALSE>>=
+library("MASS")
+@
+
+
+<<>>=
 mod_lda <- lda(class~., data=Train)
+@
+
+Zróbmy predykcjê na zbiorze testowym:
+
+<<>>=
+pred <- predict(mod_lda, newdata=Test)$class
+@
+
+Tabela reklasyfikacji na zbiorze testowym wygl±da nastêpuj±co:
+
+<<cache=TRUE>>=
 pred <- predict(mod_lda, newdata=Test)$class
 t <- table(pred,Test$class)
-proc <- 100*sum(diag(t))/sum(t)
-t
+t   
 @
 
-I, mimo ¿e procent poprawnej klasyfikacji jest bardzo wysoki (ponad $92\%$), to nie mo¿emy tu mówiæ o dobrym klasyfikatorze.
+A procent poprawnego dopasowania nastêpuj±co:
 
-\bigskip
+<<>>=
+proc <- 100*sum(diag(t))/sum(t)
+proc
+@
 
-Przyjrzyjmy siê jeszcze czu³o¶ci i precyzji:
+Mimo ¿e procent poprawnej klasyfikacji jest bardzo wysoki (ponad $92\%$), to nie mo¿emy tu mówiæ o dobrym klasyfikatorze. Wyra¼nie widaæ, ¿e nasz LDA klasyfikuje prawie wszystkie obserwacje jako $0$, a przez fakt, ¿e nasza próba nie jest symetryczna (zera stanowi± znaczn± wiêkszo¶æ próby) osi±gamy wysoki procent poprawnej klasyfikacji. O tym, ¿e rzeczywi¶cie model nie jest najlepszy powiedz± nam równie¿ czu³o¶æ i precyzja:
 
-<<echo=FALSE,cache=TRUE>>=
+<<cache=TRUE>>=
 czulosc <- t[2,2]/(sum(t[2,]))
 precyzja <- t[2,2]/sum(t[,2])
+
+czulosc; precyzja
 @
 
-Czu³o¶æ i precyzja wynosz± odpowiednio $25$ i $12\%$. Jest wiêc bardzo s³abo. 
+Czu³o¶æ i precyzja wynosz± odpowiednio $25\%$ i $12\%$. Jest wiêc bardzo s³abo. 
+
+Sprawd¼my jeszcze jako¶æ dopasowanego modelu przeprowadzaj±c kroswalidacjê dziesiêtnokrotn±:
+
+<<cache=TRUE>>=
+n <- nrow(se_wyb)
+s <- sample(1:n,n)
+dane <- se_wyb[s,]
+ile <- floor(n/10)
+
+proc <- numeric(10)
+czulosc <- numeric(10)
+precyzja <- numeric(10)
+i <- 1
+for(i in 1:10){
+   co <- ((i-1)*ile+1):(i*ile)
+   mod_lda <- lda(class~., data=dane[-co,])
+   pred <- predict(mod_lda, newdata=dane[co,])$class
+   t <- table(pred,dane[co,]$class)
+   proc[i] <- 100*sum(diag(t))/sum(t)
+   czulosc[i] <- t[2,2]/(sum(t[2,]))
+   precyzja[i] <- t[2,2]/sum(t[,2])
+}
+
+mean(proc)
+mean(czulosc)
+mean(precyzja)
+
+@
+
+Czu³o¶æ i precyzja nieco siê poprawi³y. I na koniec wyznaczmy krzyw± ROC:
+
+<<echo=FALSE,warning=FALSE>>=
+library("ROCR")
+@
+
+<<>>=
+mod_lda <- lda(class~., data=Train)
+pred1 <- predict(mod_lda, newdata=Test)
+pred <- prediction(pred1$posterior[,2], Test$class)
+perf <- performance(pred, measure="tpr",x.measure="fpr")
+plot(perf)
+@
+
+Wspó³czynnik AUC obliczamy nastêpuj±co:
+
+<<>>=
+auc <- performance(pred,"auc")
+@
+
+Wynosi on $74\%$.
 
 \section{QDA}
 
-Dopasujmy teraz model QDA. Tabela reklasyfikacji na zbiorze testowym wygl±da nastêpuj±co:
+Dopasujmy model qda do naszych danych na zbiorze treningowym:
 
-<<echo=FALSE,cache=TRUE>>=
+
+<<>>=
 mod_qda <- qda(class~., data=Train2)
+@
+
+Zróbmy predykcjê na zbiorze testowym:
+
+<<>>=
+pred <- predict(mod_qda, newdata=Test2)$class
+@
+
+Tabela reklasyfikacji na zbiorze testowym wygl±da nastêpuj±co:
+
+<<cache=TRUE>>=
 pred <- predict(mod_qda, newdata=Test2)$class
 t <- table(pred,Test2$class)
-proc <- 100*sum(diag(t))/sum(t)
-t
+t   
 @
 
-Procent poprawnej klasyfikacji wynosi $82\%$. Jest wiêc mniejszy ni¿ w przypadku LDA. Jednak tym razem czu³o¶æ ($18\%$) i precyzja ($33\%$) s± duzo wiêksze. Metoda $QDA$ wydaje siê wiêc lepsza.
+A procent poprawnego dopasowania nastêpuj±co:
 
-<<echo=FALSE,cache=TRUE>>=
+<<>>=
+proc <- 100*sum(diag(t))/sum(t)
+proc
+@
+
+Mimo ¿e procent poprawnej klasyfikacji jest do¶æ wysoki (ponad $87\%$), to nie mo¿emy tu mówiæ o dobrym klasyfikatorze. O tym, ¿e rzeczywi¶cie model nie jest najlepszy powiedz± nam przede wszystkim czu³o¶æ i precyzja:
+
+<<cache=TRUE>>=
 czulosc <- t[2,2]/(sum(t[2,]))
 precyzja <- t[2,2]/sum(t[,2])
+
+czulosc; precyzja
 @
+
+Czu³o¶æ i precyzja wynosz± odpowiednio $18\%$ i $33\%$. Jest wiêc s³abo, lecz ju¿ lepiej ni¿ w LDA. 
+
+I na koniec wyznaczmy krzyw± ROC:
+
+<<>>=
+mod_qda <- qda(class~., data=Train2)
+pred1 <- predict(mod_qda, newdata=Test2)
+pred <- prediction(pred1$posterior[,2], Test2$class)
+perf <- performance(pred, measure="tpr",x.measure="fpr")
+plot(perf)
+@
+
+Wspó³czynnik AUC obliczamy nastêpuj±co:
+
+<<>>=
+auc <- performance(pred,"auc")
+@
+
+Wynosi on $74\%$. Czyli tyle samo, co dla LDA.
+
 
