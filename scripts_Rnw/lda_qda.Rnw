@@ -21,12 +21,27 @@ Przyjrzyjmy siê jeszcze czu³o¶ci i precyzji:
 
 <<echo=FALSE,cache=TRUE>>=
 czulosc <- t[2,2]/(sum(t[2,]))
-czulosc
-@
-
-<<>>=
 precyzja <- t[2,2]/sum(t[,2])
-precyzja
 @
 
+Czu³o¶æ i precyzja wynosz± odpowiednio $25$ i $12\%$. Jest wiêc bardzo s³abo. 
+
+\section{QDA}
+
+Dopasujmy teraz model QDA. Tabela reklasyfikacji na zbiorze testowym wygl±da nastêpuj±co:
+
+<<echo=FALSE,cache=TRUE>>=
+mod_qda <- qda(class~., data=Train2)
+pred <- predict(mod_qda, newdata=Test2)$class
+t <- table(pred,Test2$class)
+proc <- 100*sum(diag(t))/sum(t)
+t
+@
+
+Procent poprawnej klasyfikacji wynosi $82\%$. Jest wiêc mniejszy ni¿ w przypadku LDA. Jednak tym razem czu³o¶æ ($18\%$) i precyzja ($33\%$) s± duzo wiêksze. Metoda $QDA$ wydaje siê wiêc lepsza.
+
+<<echo=FALSE,cache=TRUE>>=
+czulosc <- t[2,2]/(sum(t[2,]))
+precyzja <- t[2,2]/sum(t[,2])
+@
 
