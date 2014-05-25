@@ -17,7 +17,7 @@ summary(x,x^3,x^x)
 \begin{center}
 \begin{tabular}{| l | c | c | c | c | c | c | c | c | c | c | c |} \hline \hline
   & genergy & gpuls & gdenergy & gdpuls & nbumps & nbumps2 & nbumps3 & nbumps4 & nbumps5 & energy & maxenergy \\ \hline
-<<results='asis', echo=FALSE>>=
+<<results='asis', echo=FALSE,cache=TRUE>>=
 m <- numeric(11)
 m <- apply(se[,-c(1:3,8,16)], 2, sd)
 
@@ -26,7 +26,7 @@ m <- formatC(m, digits = 2, format = "f")
 cat("Odchylenie St&",paste(m, collapse="&") )
 @
 \\ \hline
-<<results='asis',echo=FALSE>>=
+<<results='asis',echo=FALSE,cache=TRUE>>=
    m <- numeric(11)
 m <- apply(se[,-c(1:3,8,16)], 2, var)
 
@@ -35,7 +35,7 @@ m <- formatC(m, digits = 2, format = "f")
 cat("Wariancja&",paste(m, collapse="&") )
 @
 \\ \hline
-<<results='asis',echo=FALSE>>=
+<<results='asis',echo=FALSE,cache=TRUE>>=
    m <- numeric(11)
 m <- apply(se[,-c(1:3,8,16)], 2, median)
 
@@ -44,7 +44,7 @@ m <- formatC(m, digits = 2, format = "f")
 cat("Mediana&",paste(m, collapse="&") )
 @
 \\ \hline
-<<results='asis',echo=FALSE>>=
+<<results='asis',echo=FALSE,cache=TRUE>>=
    m <- numeric(11)
 m <- apply(se[,-c(1:3,8,16)], 2, mean)
 
@@ -58,7 +58,7 @@ cat("¦rednia&",paste(m, collapse="&") )
 \caption[Podstawowe statystyki agreguj±ce dla zmiennych ci±g³ych.]{Podstawowe statystyki agreguj±ce dla zmiennych ci±g³ych.}
 \end{table}
 \end{landscape}
-<<>>=
+<<cache=TRUE>>=
 summary(se[,-c(1:3,8,16)])
 # testy na normalnosc apply(se[,-c(1:3,8,16)],2,shapiro.test)
 cor <- apply(formatC(cor(se[,-c(1:3,8,16)],method="spearman"),digits=2, format="f"),2,as.numeric)
@@ -68,5 +68,71 @@ cor
 
 \subsection{Zmienna obja¶niana}
 <<>>=
-summary(se[,16])
+   summary(se[,16])
 @
+
+\section{Usuniêcie braków danych, wstêpna selekcja}
+
+W naszych danych nie wystêpuj± braki danych.
+
+\bigskip
+
+Na pierwszy rzut oka widaæ, ¿e niektóre zmienne s± zupe³nie nieistotne lub bardzo ze sob± skorelowane, dlatego chcieliby¶my wy³±czyæ je od razu z analizy. Przyjrzyjmy siê naszym danym:
+   
+<<echo=FALSE,cache=TRUE>>=
+library("foreign")
+se <- read.arff("http://archive.ics.uci.edu/ml/machine-learning-databases/00266/seismic-bumps.arff")
+head(se,3)
+@
+
+
+\bigskip
+
+Zacznijmy od zmiennych \textit{nbumps6, nbumps7} oraz \textit{nbumps89}. S± to zmienne ilo¶ciowe, wszystkie jednak przyjmuj± warto¶æ zero. Niczego wiêc nie wnosz± one do naszej analizy. Zast±pmy je wiêc przez zmienn± \textit{nbumps5} (a raczej rozszerzmy definicjê zmiennej \textit{nbumps5}), która bêdzie od tej pory definiowaæ liczbê wstrzasów seismicznych w zakresie $[10^5,10^{10})$. Z analizy wyrzucimy równie¿ zmienn± \textit{maxenergy}, która wydaje siê silnie zale¿na od zmiennej \textit{energy}.
+
+\bigskip
+
+Kolejn± zmienn±, któr± usuniemy z analizy bêdzie zmienna \textit{nbumps}, która jest liniowo zale¿na od zmiennych \textit{nbumps2, nbumps3, nbumps4} i \textit{nbumps5}.
+
+\bigskip
+
+Zajmijmy siê jeszcze zmiennymi nominalnymi. Niestety nie ka¿da metoda, któr± bêdziemy stosowaæ do analizy (np. QDA) dobrze sobie z nimi radzi. Bêdziemy wiêc pracowaæ na dwóch zestawach danych. Tam, gdzie siê da, bêdziemy korzystaæ z danych oryginalnych. W reszcie metod zamienimy sobie dane nominalny na dane ilo¶ciowe w nastêpuj±cy sposób:
+   
+Zmienn± \textit{seismic} przyjmuj±c± warto¶ci ze zbioru ${a,b,c,d}$ zamienimy na zmienn± \textit{seismic2} przyjmu±c± warto¶ci ${0,1,2,3}$. W analogiczny sposób zamienimy zmienn± \textit{sesismoacoustic} na zmienn± \textit{sesismoacoustic2} oraz zmienn± \textit{ghazard} na zmienn± \textit{ghazard2}. Mo¿emy tak zrobiæ, gdy¿ ich warto¶ci reprezentuj± pewien porz±dek (a - ma³e, d - du¿e). Tak nie jest niestety w przypadku zmiennej \textit{shift}. Dlatego dla niej stworzymy zmienn± indykatorow± \textit{shift2} równ± $1$, gdy na zmianie byli górnicy, a $0$, gdy na zmianie byli naukowcy. 
+
+\bigskip
+
+W ten sposób nasz zbiór danych w formie nominalnej przedstawia siê nastêpuj±co:
+
+<<echo=FALSE,cache=TRUE>>=
+se_wyb <- se[,-c(14:16,18,9)]
+head(se_wyb,3)
+@
+
+A zbiór danych w formie liczbowej nastêpuj±co:
+
+<<echo=FALSE,cache=TRUE>>=
+se_r <- se_wyb
+levels(se_r$seismic) <- c(0,1,2,3)
+levels(se_r$seismoacoustic) <- c(0,1,2,3)
+levels(se_r$shift) <- c(0,1)
+levels(se_r$ghazard) <- c(0,1,2,3)
+se_r[,c(1,2,3,8)] <- apply(se_r[,c(1,2,3,8)],2,as.numeric)
+names(se_r)[c(1,2,3,8)] <- c("seismic2","seismoacoustic2","shift2","ghazard2")
+
+head(se_r,3)
+@
+
+<<echo=FALSE,cache=TRUE>>=
+set.seed(456)
+ind <- sample(1:nrow(se_wyb), nrow(se_wyb)*2/3)
+
+Train  <-  se_wyb[ind,]
+Test  <-  se_wyb[-ind,]
+
+Train2 <- se_r[ind,]
+Test2 <- se_r[-ind,]
+@
+
+
+

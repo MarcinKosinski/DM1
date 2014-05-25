@@ -2,7 +2,7 @@
 \thispagestyle{fancy}
 \section{Model pe³ny}
 Po wybraniu zbioru testowego i treningowego w proporcjach 1:2 przeprowadzono regresjê logistyczn± i wywo³ano podsumowanie pe³nego modelu regresji logistycznej.
-<<>>=
+<<cache=TRUE>>=
 Se.logit  <-  glm(class~.,data=Train,family="binomial")
 summary(Se.logit)
 @
@@ -11,37 +11,37 @@ Przy tak ustawionym ziarnie losowania \texttt{set.seed(456)} istotnymi zmiennymi
 Korzystaj±c z funkcji \texttt{step()} wyliczono modele oparte oraz kryteria informacyjne AIC o BIC.
 \subsection{Kryterium AIC}
 Stosuj±c metodê wsteczn± otrzymano model:
-<<results='hide'>>=
+<<results='hide',cache=TRUE>>=
 Se.logit.aic  <-  step(Se.logit,direction="backward",k=2)
 @
-<<echo=FALSE>>=
+<<echo=FALSE,cache=TRUE>>=
 Se.logit.aic$formula
 @
 Kryterium oparte o AIC wybra³o zmienne, które by³y istotne w modelu pe³nym, oraz dodatkowo zmienne, których p-warto¶ci by³y bliskie $0.05$. Jako ¿e kryterium AIC jest konserwatywne i nie odrzuca zmiennych, nie dziwne, ¿e w modelu zosta³y uwzglêdnione równie¿ zmienne o p-warto¶ci zbli¿onej do $0.05$.
 \subsection{Kryterium BIC}
 Stosuj±c metodê wsteczn± otrzymano model:
-<<results='hide'>>=
+<<results='hide',cache=TRUE>>=
 Se.logit.bic  <-  step(Se.logit,direction="backward",k=log(nrow(se_wyb)))
 @
-<<echo=FALSE>>=
+<<echo=FALSE,cache=TRUE>>=
 Se.logit.bic$formula
 @
 Kryterium oparte o BIC wybra³o tylko te zmienne, które by³y istotne w modelu pe³nym, czyli model \texttt{shift + gpuls + nbumps2 + nbumps3}. Poniewa¿ prawdopodobieñstwo wybrania przez kryterium BIC poprawnego modelu d±¿y do 1, a zbiór ucz±c mia³ ponad 1800 obserwacji, zak³adam, ¿e model wybrany przez BIC jest odpowiedni.
 \section{Porównanie z modelem pe³nym}
 W celu przetestowania adekwatno¶ci wyboru modelu pe³nego przeprowadzono test Chi-kwadrat, by porównaæ go z modelami mniejszymi: \\
 \textbf{Test: kryterium AIC vs model pe³ny}
-<<>>=
+<<cache=TRUE>>=
 anova(Se.logit.aic,Se.logit,test="Chi")
 @
 Poniewa¿ test nie odrzuci³ hipotezy zerowej (p-warto¶æ jest wiêksza o zak³adanego poziomu istotno¶ci $0.05$) to nie ma podstaw by nie zak³adaæ, ¿e model pe³ny mo¿e byæ uproszczony do modelu mniejszego wybranego przez kryterium informacyjne AIC. \\
 \newpage
 \textbf{Test: kryterium BIC vs model pe³ny}
-<<>>=
+<<cache=TRUE>>=
 anova(Se.logit.bic,Se.logit,test="Chi")
 @
 Poniewa¿ test nie odrzuci³ hipotezy zerowej (p-warto¶æ jest wiêksza o zak³adanego poziomu istotno¶ci $0.05$) to nie ma podstaw by nie zak³adaæ, ¿e model pe³ny mo¿e byæ uproszczony do modelu mniejszego wybranego przez kryterium informacyjne BIC.
 \textbf{Test: kryterium AIC vs kryterium BIC}
-<<>>=
+<<cache=TRUE>>=
 anova(Se.logit.aic,Se.logit.bic,test="Chi")
 @
 Warto¶æ krytyczna tetsu jest mniejsza od poziomu istotno¶ci zatem nale¿y odrzuciæ hipotezê zerow± i przyj±æ model wybrany za pomoc± kryterium BIC.
@@ -51,24 +51,24 @@ Warto¶æ krytyczna tetsu jest mniejsza od poziomu istotno¶ci zatem nale¿y odrzuci
 Regresja liniowa oparta o kryterium informacyjne BIC i regu³ê krokow± wsteczn± wybra³o do modelu zmienne jako adekwatne i istotne: \texttt{shift + gpuls + nbumps2 + nbumps3}.
 \subsection{Predykcja dla modelu pe³nego}
 Wywo³anie i stworzenie klasyfikatora dla modelu pe³nego wygl±da nastêpuj±co:
-<<>>=
+<<cache=TRUE>>=
 P <- predict(Se.logit,newdata=Test,type="response")
 Pred  <-  ifelse(P>0.5,1,0)
 @
 Poprawno¶æ dopasowania wynosi:
-<<>>=
+<<cache=TRUE>>=
 Tab <- table(Test$class,Pred)
 100*sum(diag(Tab))/sum(Tab)
 @
 
 \subsection{Predykcja dla modelu opartego na AIC}
 Wywo³anie i stworzenie klasyfikatora dla modelu opartego na AIC wygl±da nastêpuj±co:
-<<>>=
+<<cache=TRUE>>=
 P.aic <- predict(Se.logit.aic,newdata=Test,type="response")
 Pred.aic  <-  ifelse(P.aic>0.5,1,0)
 @
 Poprawno¶æ dopasowania wynosi:
-<<>>=
+<<cache=TRUE>>=
 Tab.aic <- table(Test$class,Pred.aic)
 100*sum(diag(Tab.aic))/sum(Tab.aic)
 
@@ -80,18 +80,18 @@ P.bic <- predict(Se.logit.bic,newdata=Test,type="response")
 Pred.bic  <-  ifelse(P.bic>0.5,1,0)
 @
 Poprawno¶æ dopasowania wynosi:
-<<>>=
+<<cache=TRUE>>=
 Tab.bic <- table(Test$class,Pred.bic)
 100*sum(diag(Tab.bic))/sum(Tab.bic)
 @
 
 Warto¶ci poprawno¶ci dopasowania w ka¿dym z modeli wychodz± bardzo wysokie. Rzêdu 94\%. Nie jest to ¿aden b³±d, gdy¿ np. 5 pierwszych predykcji wygl±da ró¿nie:
-<<>>=
+<<cache=TRUE>>=
 formatC(c(P[1:5],P.aic[1:5],P.bic[1:5]), digits=3, format="f")
 @
 \subsection{Kroswalidacja}
 Prawdopodobieñstwo poprawnej klasyfikacji na podstawie kroswalidacji dla mode³u pe³nego:
-<<>>=
+<<cache=TRUE>>=
 Pop <- numeric(nrow(se_wyb))
 
 for(i in 1:nrow(se_wyb)){
@@ -107,19 +107,19 @@ sum(Pop)/nrow(se_wyb)
 
 \section{Uwaga! na nisk± jako¶æ dopasowania}
 Modele dopasowane w poprzednim podrozdziale nie s± poprawne pomimo, ¿e b³±d klasyfikacji w ka¿dym z przypadków wynosi³ po 6\%. Proszê spojrzeæ na tabelê klasyfikacyj± w ka¿dym z tych modeli:
-<<>>=
+<<cache=TRUE>>=
 Tab
 Tab.aic
 Tab.bic
 @
 W ka¿dym z modelu oko³o 50 przypadków wyst±pieñ silnych wstrz±sów przy nastêpnej zmianie za³ogi górnikow nie zosta³o poprawnie zaklasyfikowanych. Oznacza to, ¿e nasz klasyfikator jest b³êdny i klasyfikuje wszystkie przypadki do cechy 0, oznaczaj±cej, ¿e niebezpieczeñstwa nie bêdzie i ¿e silne wstrz±sy nie nast±pi±. Pomimo ma³ego b³êdu predykcji klasyfikator oparty na modelu regresji liniowej jest nieadekwatny i b³êdny.
 \section{Regularyzowana wersja regresji logistycznej}
-<<eval=FALSE>>=
+<<eval=FALSE,cache=TRUE>>=
 rlas<-glmnet(se_wyb[,-14], se_wyb[,14],  family = "binomial", alpha = 0,  lambda.min = 1e-4)
 plot(rlas)
 @
 Nie dzia³a powy¿ej
-<<eval=FALSE>>=
+<<eval=FALSE,cache=TRUE>>=
 cv1 = cv.glmnet(se_wyb[,-14], se_wyb[,14])
 
 nsteps <- 10

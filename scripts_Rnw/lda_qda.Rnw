@@ -1,6 +1,32 @@
 \chapter{LDA i QDA}
 \thispagestyle{fancy}
-<<>>=
-letters[1:12]
+
+\section{LDA}
+
+Dopasujmy model lda do naszych danych. Tabela reklasyfikacji na zbiorze testowym wygl±da nastêpuj±co:
+
+<<echo=FALSE, cache=TRUE>>=
+mod_lda <- lda(class~., data=Train)
+pred <- predict(mod_lda, newdata=Test)$class
+t <- table(pred,Test$class)
+proc <- 100*sum(diag(t))/sum(t)
+t
 @
+
+I, mimo ¿e procent poprawnej klasyfikacji jest bardzo wysoki (ponad $92\%$), to nie mo¿emy tu mówiæ o dobrym klasyfikatorze.
+
+\bigskip
+
+Przyjrzyjmy siê jeszcze czu³o¶ci i precyzji:
+
+<<echo=FALSE,cache=TRUE>>=
+czulosc <- t[2,2]/(sum(t[2,]))
+czulosc
+@
+
+<<>>=
+precyzja <- t[2,2]/sum(t[,2])
+precyzja
+@
+
 
