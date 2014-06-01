@@ -9,7 +9,7 @@ library("ROCR")
 library("e1071")
 library("adabag")
 library("randomForest")
-
+#install.packages(c("randomForest", "adabag"))
 if(!require(parallel)) { 
 install.packages("parallel"); require(parallel)}
 
@@ -50,3 +50,4 @@ auc <- function(pred_prawdopod, prawdziwe_klasy){
 }
 
 @
+
