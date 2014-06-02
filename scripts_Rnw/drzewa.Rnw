@@ -1,6 +1,5 @@
 \chapter{Drzewa decyzyjne}
 \thispagestyle{fancy}
-<<>>=
-matrix(c(0,0,2,3,3,4,4,4), ncol=3)
-@
-
+\section{Dopasowanie modelu i predykcja}
+\section{Diagnostyka modelu}
+\section{Krzywa ROC i wspó³czynnik AUC}

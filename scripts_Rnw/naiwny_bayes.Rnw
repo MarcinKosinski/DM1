@@ -1,6 +1,10 @@
 \chapter{Naiwny Klasyfikator Bayesa}
 \thispagestyle{fancy}
-<<>>=
-cos(30)
-@
+\section{Dopasowanie modelu i predykcja}
+\section{Diagnostyka modelu}
+\section{Krzywa ROC i wspó³czynnik AUC}
+
+Porównaj dzia³anie klasy???katorów: Naiwnego Bayesa (funkcja naiveBayes(e1071)) oraz k-nn
+(funkcja knn(class)) na wybranym zbiorze danych.
+
 

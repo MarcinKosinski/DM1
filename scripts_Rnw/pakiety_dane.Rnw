@@ -12,6 +12,10 @@ library("randomForest")
 #install.packages(c("randomForest", "adabag"))
 if(!require(parallel)) { 
 install.packages("parallel"); require(parallel)}
+if(!require(e1071)) { 
+install.packages("e1071"); require(e1071)}
+if(!require(class)) { 
+install.packages("class"); require(class)}
 
 se <- read.arff("http://archive.ics.uci.edu/ml/machine-learning-databases/00266/seismic-bumps.arff")
 

@@ -45,7 +45,7 @@ Poniewa¿ test nie odrzuci³ hipotezy zerowej (p-warto¶æ jest wiêksza o zak³adaneg
 anova(Se.logit.aic,Se.logit.bic,test="Chi")
 @
 Warto¶æ krytyczna tetsu jest mniejsza od poziomu istotno¶ci zatem nale¿y odrzuciæ hipotezê zerow± i przyj±æ model wybrany za pomoc± kryterium BIC.
-\texttt{Czy aby na pewno ostatni test jest dobrze przeanalizowany?}
+
 %Duze p-wartosci => przyjmujemy hipoteze zerowa ze model moze byc uproszczony do mniejszego.
 \section{Podsumowanie}
 Regresja liniowa oparta o kryterium informacyjne BIC i regu³ê krokow± wsteczn± wybra³o do modelu zmienne jako adekwatne i istotne: \texttt{shift + gpuls + nbumps2 + nbumps3}.
@@ -92,32 +92,48 @@ formatC(c(P[1:5],P.aic[1:5],P.bic[1:5]), digits=3, format="f")
 \subsection{Kroswalidacja}
 Z racji na du¿y zbiór danych, aby przyspieszyæ kroswalidacjê, dziêki pakietowi \texttt{parallel} stworzono odpowiedni klaster obliczeniowy, rozdzielaj±cy obliczenia na tyle w±tków ile jest na procesorze rdzeni.
 Prawdopodobieñstwo poprawnej klasyfikacji na podstawie kroswalidacji dla mode³u pe³nego:
-<<kroswalidacja,cache=TRUE>>=
-kros <- function(k=0){
-Pop <- numeric(nrow(se_wyb))
 
-for(i in 1:nrow(se_wyb)){
-   gi  <- glm(class~.,data=se_wyb[-c(i),],family="binomial")
-   Pi  <- predict(gi,type="response",newdata=se_wyb[c(i),])
-   Predi=ifelse(Pi>0.5,1,0)
-   Pop[i]=ifelse(Predi==se_wyb$class[i],1,0)
+
+<<cache=TRUE, echo=FALSE>>=
+n <- nrow(se_wyb)
+s <- sample(1:n,n)
+dane <- se_wyb[s,]
+ile <- floor(n/10)
+ile_ost <- ile+ (n-10*ile)
+
+pro <- numeric(10)
+czu <- numeric(10)
+pre <- numeric(10)
+
+for(i in 1:10){
+
+   if(i != 10){
+      co <- ((i-1)*ile+1):(i*ile)
+   } else{
+      co <- (n-ile_ost+1):n
+   }
+   
+   mod <- glm(class~., data=dane[-co,], family="binomial")
+   pr <- predict(mod,type="response",newdata=se_wyb[co,])
+   Predi <- ifelse(pr>0.5,1,0)   
+   t <- tabela(Predi,dane[co,]$class)
+   pro[i] <- procent(t)
+   czu[i] <- czulosc(t)
+   pre[i] <- precyzja(t)
+   
 }
-return(sum(Pop)/nrow(se_wyb))
-}
-# klaster obliczeniowy
-require(parallel)
-cl <- makeCluster(detectCores())
 @
-<<klustrowanie,results='hide', cache=TRUE>>=
-clusterEvalQ(cl, library("foreign"))
-clusterEvalQ(cl,se <- read.arff("http://archive.ics.uci.edu/ml/machine-learning-databases/00266/seismic-bumps.arff"))
-clusterEvalQ(cl,se <- se[,-c(14:16)])
-clusterEvalQ(cl,se_wyb <- se[,-c(9,15)])
+
+<<>>=
+mean(pro)   # procent poprawnej klasyfikacji
+mean(czu)   # czulosc
+mean(pre)   # precyzja
 @
-<<obliczeniaklastrowe>>=
-parLapply(cl, 1, kros)
-stopCluster(cl)
-@
+COS MI SIE TU NIE PODOBA
+
+
+
+
 
 \section{Uwaga! na nisk± jako¶æ dopasowania}
 Modele dopasowane w poprzednim podrozdziale nie s± poprawne pomimo, ¿e b³±d klasyfikacji w ka¿dym z przypadków wynosi³ po 6\%. Proszê spojrzeæ na tabelê klasyfikacyj± w ka¿dym z tych modeli:
@@ -128,13 +144,13 @@ Tab.bic
 @
 W ka¿dym z modelu oko³o 50 przypadków wyst±pieñ silnych wstrz±sów przy nastêpnej zmianie za³ogi górnikow nie zosta³o poprawnie zaklasyfikowanych. Oznacza to, ¿e nasz klasyfikator jest b³êdny i klasyfikuje wszystkie przypadki do cechy 0, oznaczaj±cej, ¿e niebezpieczeñstwa nie bêdzie i ¿e silne wstrz±sy nie nast±pi±. Pomimo ma³ego b³êdu predykcji klasyfikator oparty na modelu regresji liniowej jest nieadekwatny i b³êdny.
 \section{Regularyzowana wersja regresji logistycznej}
-<<eval=FALSE,cache=TRUE>>=
-rlas<-glmnet(se_wyb[,-14], se_wyb[,14],  family = "binomial", alpha = 0,  lambda.min = 1e-4)
+<<>>=
+rlas<-glmnet(as.matrix(se_r[,-14]), se_r[,14],  family = "binomial", alpha = 0,  lambda.min = 1e-4)
 plot(rlas)
 @
-Nie dzia³a powy¿ej
-<<eval=FALSE,cache=TRUE>>=
-cv1 = cv.glmnet(se_wyb[,-14], se_wyb[,14])
+Dzia³a powy¿ej - dodaæ sensowne komentarze :) !
+<<>>=
+#cv1 = cv.glmnet(as.matrix(se_r[,-14]), se_r[,14]) ta linijka nie dziala
 
 nsteps <- 10
 b1 <- coef(rlas)[-1, 1:nsteps]
@@ -145,5 +161,32 @@ b1 <- as.matrix(b1[w, ])
 matplot(1:nsteps, t(b1), type = "o", pch = 19, col = "blue", xlab = "Step", ylab = "Coefficients", lty = 1)
 title("Lasso")
 abline(h = 0, lty = 2)
+@
+Tutaj te¿ dodaæ komentarze :)
+
+\section{Krzywa ROC i wspó³czynnik AUC dla modelu wybranego przez BIC}
+I na koniec wyznaczmy krzyw± ROC:
+
+<<echo=FALSE,fig.align='center',fig.height=6, fig.width=10>>=
+roc(Pred.bic, Test$class)
+@
+
+Wspó³czynnik AUC wynosi:
+
+<<echo=FALSE>>=
+auc(Pred.bic, Test$class)
+@
+
+
+<<echo=FALSE>>=
+tab <- tabela(Pred.bic, Test$class)
+logit_ost <- vector("list",6)
+names(logit_ost) <- c("tabela", "procent", "czulosc", "precyzja", "roc", "auc")
+logit_ost$tabela <- tab
+logit_ost$procent <- procent(tab)
+logit_ost$czulosc <- czulosc(tab)
+logit_ost$precyzja <- precyzja(tab)
+logit_ost$roc <- list(Pred.bic, Test$class) 
+logit_ost$auc <- auc(Pred.bic, Test$class)
 @
 

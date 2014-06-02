@@ -1,7 +1,7 @@
-\chapter{LDA i QDA}
+\chapter{Analiza dyskryminacyjna}
 \thispagestyle{fancy}
 
-\section{LDA}
+\section{Liniowa - LDA}
 
 \subsection{Dopasowanie modelu i predykcja}
 
@@ -104,7 +104,7 @@ lda_ost$roc <- list(pred_praw, Test$class)  # potem wystarczy roc(lda$roc[[1]],l
 lda_ost$auc <- auc(pred_praw, Test$class)
 @
 
-\section{QDA}
+\section{Kwadratowa - QDA}
 
 \subsection{Dopasowanie modelu i predykcja}
 

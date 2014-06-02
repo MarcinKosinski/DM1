@@ -1,15 +1,16 @@
 \chapter*{Od autorów}
 \thispagestyle{fancy}
 \addcontentsline{toc}{chapter}{Od autorów}
-\section{Motywacja}
-
+\section*{Motywacja}
+\addcontentsline{toc}{section}{Motywacja}
 Górnictwo od zawsze by³o i nadal jest po³±czone z wyst±pieniami zagro¿eñ czêsto nazywanych górniczym hazardem. Szczególnym przypadkiem zagro¿eñ zwi±zanych z prac± w górnictwie s± wstrz±sy seismiczne, które czêsto nawiedzaj± podziemne kopalnie. Wstrz±sy seisemiczne s± najtrudniejszym do wykrycia zagro¿eniem naturalnym i czêsto s± porównywane do trzêsieñ ziemi. Coraz wiêkszy rozwój systemu monitoringu wstrz±sów seismicznych pozwoli³ na lepsze zrozumienie ruchów p³yt tektonicznych i przyczyni³ siê do powstawania metod predykcji wstrz±sów.
 \paragraph{}Jednak jak dot±d metody przewidywañ wstrz±sów maj± siê daleko od ich prawdziwego wystêpowania. Z³o¿ono¶æ procesów seismicznych i du¿a dysproporcja miêdzy liczb± wstrz±sów o ma³ym naileniu, a liczb± wstrz±sów o du¿ym nasileniu spowodw±³y ($ > 10^4J$), ¿e techniki statystyczne bywaj± niewystarczaj±ce to przewidzenia ryzyka wyst±pienia wstrz±su seisemicznego b±d¼ trzêsienia ziemi. 
 \paragraph{} Z racji na realne zagro¿enie ¿ycia ze strony wstrz±sów seismicznych, istotnym jest poszukiwanie nowych mo¿liwo¶ci lepszego wykrywania zagro¿enia, miêdzy innymi przy u¿yciu metod uczenia maszynowego. Jest to dziedzina wci±¿ rozwijana, gdy¿ obecnie u¿ywane metody s± wci±¿ niewystarczaj±ce i nie maj± odpowiedniej dok³adno¶ci i czu³o¶ci na predykcjê wystêpowania wstrz±sów seismicznych.
 \paragraph{}
 Odpowiednio dobra predykcja wzrostu aktywno¶ci seismicznej jest nies³ychanie istotna w problemach praktycznych. Dlatego zdecydowwali¶my przyjrzeæ sie zbiorowi danych dotycz±cemu realnych problemów z który zmaga siê ¶wiat i wspó³czesna statystyka stosowana.
 \newpage
-\section{Opis zmiennych w zbiorze}
+\section*{Opis zmiennych w zbiorze}
+\addcontentsline{toc}{section}{Opis zmiennych w zbiorze}
 Zbiór u¿yty do analizy cechuje siê niezbalansowanym rozk³adem przypadków wystêpowania i braku wystêpowania cechy, dla której ma byæ zadana predykcja. Na blisko ponad 2000 przypadków, tylko 170 to przypadki reprezentuj±ce klasê 1. Bêdzie to g³ówny problem przewijaj±cy siê w ca³ej analizie danych.
 
 \begin{table}[h]
@@ -50,6 +51,7 @@ class & czy wyst±pi³ silny wstrz±s podczas nastêpnej wizyty \\ \bottomrule
 
 
 
-\section{Szczegó³y techniczne pracy}
+\section*{Szczegó³y techniczne pracy}
+\addcontentsline{toc}{section}{Szczegó³y techniczne pracy}
 
 
