@@ -18,6 +18,11 @@
 \usepackage{booktabs}
 \usepackage{tikz}
 \usepackage{float}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{lscape}
+\usepackage{rotating}
+\usepackage{epstopdf}
 \usepackage{hyperref} %pakiet do dodawania hiper³±cz
 \hypersetup{colorlinks=true,
             linkcolor=blue,
@@ -37,7 +42,7 @@
 \listoftables
 \thispagestyle{fancy}
 <<echo=FALSE>>=
-opts_chunk$set(comment="", message=FALSE,tidy.opts=list(keep.blank.line=TRUE, width.cutoff=120),options(width=100, cache=TRUE),fig.align='center',fig.height=6, fig.width=10,fig.path='figure/beamer-',fig.show='hold',size='footnotesize', cache=TRUE)
+opts_chunk$set(comment="", message=FALSE,tidy.opts=list(keep.blank.line=TRUE, width.cutoff=120),options(width=100), cache=TRUE,fig.align='center',fig.height=6, fig.width=10,fig.path='figure/beamer-',fig.show='hold',size='footnotesize', cache=TRUE)
 @
 
 <<child="scripts_Rnw/intro.Rnw">>=
@@ -80,6 +85,9 @@ opts_chunk$set(comment="", message=FALSE,tidy.opts=list(keep.blank.line=TRUE, wi
 
 @
 
+<<child="scripts_Rnw/podsumowanie.Rnw">>=
+
+@
 
 \end{document}
 

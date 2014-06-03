@@ -10,7 +10,7 @@ bayes <- naiveBayes(class~.,data=Train, laplace=0.2)
 Predykcja na zbiorze testowym, klasy i prawdopodobieñstwo przynale¿no¶ci do klasy 1:
 <<>>=
 bayes_pred <- predict(bayes, newdata=Test)
-bayes_prawd <- predict(bayes, newdata=Test, type="raw")[,1]
+bayes_prawd <- predict(bayes, newdata=Test, type="raw")[,2]
 
 @
 \section{Diagnostyka modelu}
@@ -28,22 +28,25 @@ procent(tab)
 czulosc(tab)
 precyzja(tab)
 @
-Pomimo wysokiej czu³o¶ci i precyzji, naiwny klasyfikator bayesa ma bardzo ma³y, w porównaniu do innych klasyfikatorów uzytych w tym raporcie, procent poprawnej klasyfikacji. Widaæ  szczególnie wyra¼nie na krzywej ROC, ¿e jako¶æ dopasowania w jego wykonaniu jest kiepska.
+Pomimo wysokiej czu³o¶ci i precyzji, naiwny klasyfikator bayesa ma bardzo ma³y, w porównaniu do innych klasyfikatorów uzytych w tym raporcie, procent poprawnej klasyfikacji. Jednak czu³o¶æ i precyzja s± na bardzo wysokim poziomie, w porównaniu do innych klasyfikatorów!
+\section{Kroswalidacja? MO¿e}
 \section{Krzywa ROC i wspó³czynnik AUC}
 
 I na koniec wyznaczmy krzyw± ROC:
-
+\begin{figure}[h!]
 <<echo=FALSE,fig.align='center',fig.height=6, fig.width=10>>=
 roc(bayes_prawd, Test$class)
 @
+\caption{ROC dla BAYERRRRRssssA}
+\end{figure}
 
 Wspó³czynnik AUC wynosi:
 
 <<echo=FALSE>>=
 auc(bayes_prawd, Test$class)
 @
+Piêkny wynik!
 
-\section{Kroswalidacja? MO¿e}
 <<echo=FALSE>>=
 bayes_ost <- vector("list",6)
 names(bayes_ost) <- c("tabela", "procent", "czulosc", "precyzja", "roc", "auc")

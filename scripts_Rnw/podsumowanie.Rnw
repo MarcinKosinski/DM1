@@ -1,0 +1,8 @@
+\part*{Zestawienie wyników dla klasyfikatorów u¿ytych do analizy}
+\addcontentsline{toc}{part}{Zestawienie wyników dla klasyfikatorów u¿ytych do analizy}
+\thispagestyle{fancy}
+\chapter{Krzywe ROC i parametr AUC}
+\thispagestyle{fancy}
+\chapter{Tabele oceny jako¶ci klasyfikatorów}
+\thispagestyle{fancy}
+\section{Dok³adno¶æ, czu³o¶æ, precyzja}
