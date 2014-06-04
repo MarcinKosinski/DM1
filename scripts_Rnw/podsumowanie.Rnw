@@ -1,8 +1,26 @@
 \part*{Zestawienie wyników dla klasyfikatorów u¿ytych do analizy}
 \addcontentsline{toc}{part}{Zestawienie wyników dla klasyfikatorów u¿ytych do analizy}
 \thispagestyle{fancy}
-\chapter{Krzywe ROC i parametr AUC}
+\chapter{Krzywe ROC}
 \thispagestyle{fancy}
-\chapter{Tabele oceny jako¶ci klasyfikatorów}
-\thispagestyle{fancy}
-\section{Dok³adno¶æ, czu³o¶æ, precyzja}
+Wszystkie krzywe ROC dla klasyfikatórw wygl±daj± nastêpuj±co. Najlepiej spisuje siê Naiwny Klasyfikator Bayesa.
+<<echo=FALSE, cache=FALSE>>=
+kolory <- colors()[sample(1:640,6)]
+roc(lda_ost$roc[[1]],lda_ost$roc[[2]], lty=5, lwd=2, main="Porównanie krzywych ROC")
+roc2(qda_ost$roc[[1]],qda_ost$roc[[2]], col=kolory[1],lty=5, lwd=2)
+roc2(tree_ost$roc[[1]],tree_ost$roc[[2]], col=kolory[2],lty=5, lwd=2)
+roc2(logit_ost$roc[[1]],logit_ost$roc[[2]], col=colors()[50],lty=5, lwd=2)
+roc2(las_ost$roc[[1]],las_ost$roc[[2]], col=kolory[4],lty=5, lwd=2)
+roc2(bayes_ost$roc[[1]],bayes_ost$roc[[2]], col=kolory[5],lty=5, lwd=2)
+roc2(svm_ost$roc[[1]],svm_ost$roc[[2]], col=kolory[6],lty=5, lwd=2)
+
+legend(0.6,0.5, 
+       c("LDA","QDA","Drzewo","Logistyczna","Lasy","Bayes", "SVM"),
+      lty=2,
+      lwd=2,
+      col=c("red",kolory[1:2],colors()[50],kolory[4:6]))
+
+
+@
+
+

@@ -26,21 +26,6 @@ precyzja(tab)
 Pomimo do¶æ dobrej poprawnosci procentowej dopasowania, czulosc i precyzja dopasowania sa na bardzo niskim poziomie.
 
 \section{Kroswalidacja ? Mo¿e ?}
-\section{Krzywa ROC i wspó³czynnik AUC}
-
-I na koniec wyznaczmy krzyw± ROC:
-
-<<echo=FALSE,fig.align='center',fig.height=6, fig.width=10>>=
-sei_knn2 <- knn(Train2[,-14], Test2[,-14],cl=Train$class, k=2, prob=TRUE)
-
-roc(attributes(sei_knn2)$prob, Test2$class)
-@
-
-Wspó³czynnik AUC wynosi:
-
-<<echo=FALSE>>=
-auc(attributes(sei_knn2)$prob, Test2$class)
-@
 
 <<echo=FALSE>>=
 knn_ost <- vector("list",6)
@@ -49,6 +34,6 @@ knn_ost$tabela <- tab
 knn_ost$procent <- procent(tab)
 knn_ost$czulosc <- czulosc(tab)
 knn_ost$precyzja <- precyzja(tab)
-knn_ost$roc <- list(attributes(sei_knn2)$prob, Test2$class) 
-knn_ost$auc <- auc(attributes(sei_knn2)$prob, Test2$class)
+knn_ost$roc <- NA
+knn_ost$auc <- NA
 @

@@ -33,12 +33,11 @@ Pomimo wysokiej czu³o¶ci i precyzji, naiwny klasyfikator bayesa ma bardzo ma³y, 
 \section{Krzywa ROC i wspó³czynnik AUC}
 
 I na koniec wyznaczmy krzyw± ROC:
-\begin{figure}[h!]
+
 <<echo=FALSE,fig.align='center',fig.height=6, fig.width=10>>=
 roc(bayes_prawd, Test$class)
 @
-\caption{ROC dla BAYERRRRRssssA}
-\end{figure}
+
 
 Wspó³czynnik AUC wynosi:
 

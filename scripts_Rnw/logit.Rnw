@@ -2,9 +2,8 @@
 \thispagestyle{fancy}
 \section{Model pe³ny}
 Po wybraniu zbioru testowego i treningowego w proporcjach 1:2 przeprowadzono regresjê logistyczn± i wywo³ano podsumowanie pe³nego modelu regresji logistycznej.
-<<cache=TRUE>>=
+<<cache=FALSE>>=
 Se.logit  <-  glm(class~.,data=Train,family="binomial")
-summary(Se.logit)
 @
 Przy tak ustawionym ziarnie losowania \texttt{set.seed(456)} istotnymi zmiennymi w modelu s± zmienne shift w grupie \texttt{W} oraz zmienne \texttt{gpuls}, \texttt{nbumps2} i \texttt{nbump3}. Przy niektórych innych ziarnach równie¿ istotn± zmienna w modelu by³ \texttt{genergy} - co widaæ po ma³ej warto¶ci krytycznej-p.
 \section{Modele oparte o kryteria informacyjne}
@@ -34,7 +33,7 @@ W celu przetestowania adekwatno¶ci wyboru modelu pe³nego przeprowadzono test Chi
 anova(Se.logit.aic,Se.logit,test="Chi")
 @
 Poniewa¿ test nie odrzuci³ hipotezy zerowej (p-warto¶æ jest wiêksza o zak³adanego poziomu istotno¶ci $0.05$) to nie ma podstaw by nie zak³adaæ, ¿e model pe³ny mo¿e byæ uproszczony do modelu mniejszego wybranego przez kryterium informacyjne AIC. \\
-\newpage
+
 \textbf{Test: kryterium BIC vs model pe³ny}
 <<cache=TRUE>>=
 anova(Se.logit.bic,Se.logit,test="Chi")
@@ -57,7 +56,7 @@ Pred  <-  ifelse(P>0.5,1,0)
 @
 Poprawno¶æ dopasowania wynosi:
 <<cache=TRUE>>=
-Tab <- table(Test$class,Pred)
+Tab <- tabela(Pred,Test$class)
 100*sum(diag(Tab))/sum(Tab)
 @
 
@@ -69,7 +68,7 @@ Pred.aic  <-  ifelse(P.aic>0.5,1,0)
 @
 Poprawno¶æ dopasowania wynosi:
 <<cache=TRUE>>=
-Tab.aic <- table(Test$class,Pred.aic)
+Tab.aic <- tabela(Pred.aic,Test$class)
 100*sum(diag(Tab.aic))/sum(Tab.aic)
 
 @
@@ -81,7 +80,7 @@ Pred.bic  <-  ifelse(P.bic>0.5,1,0)
 @
 Poprawno¶æ dopasowania wynosi:
 <<cache=TRUE>>=
-Tab.bic <- table(Test$class,Pred.bic)
+Tab.bic <- tabela(Pred.bic,Test$class)
 100*sum(diag(Tab.bic))/sum(Tab.bic)
 @
 
@@ -89,51 +88,6 @@ Warto¶ci poprawno¶ci dopasowania w ka¿dym z modeli wychodz± bardzo wysokie. Rzêd
 <<cache=TRUE>>=
 formatC(c(P[1:5],P.aic[1:5],P.bic[1:5]), digits=3, format="f")
 @
-\subsection{Kroswalidacja}
-Z racji na du¿y zbiór danych, aby przyspieszyæ kroswalidacjê, dziêki pakietowi \texttt{parallel} stworzono odpowiedni klaster obliczeniowy, rozdzielaj±cy obliczenia na tyle w±tków ile jest na procesorze rdzeni.
-Prawdopodobieñstwo poprawnej klasyfikacji na podstawie kroswalidacji dla mode³u pe³nego:
-
-
-<<cache=TRUE, echo=FALSE>>=
-n <- nrow(se_wyb)
-s <- sample(1:n,n)
-dane <- se_wyb[s,]
-ile <- floor(n/10)
-ile_ost <- ile+ (n-10*ile)
-
-pro <- numeric(10)
-czu <- numeric(10)
-pre <- numeric(10)
-
-for(i in 1:10){
-
-   if(i != 10){
-      co <- ((i-1)*ile+1):(i*ile)
-   } else{
-      co <- (n-ile_ost+1):n
-   }
-   
-   mod <- glm(class~., data=dane[-co,], family="binomial")
-   pr <- predict(mod,type="response",newdata=se_wyb[co,])
-   Predi <- ifelse(pr>0.5,1,0)   
-   t <- tabela(Predi,dane[co,]$class)
-   pro[i] <- procent(t)
-   czu[i] <- czulosc(t)
-   pre[i] <- precyzja(t)
-   
-}
-@
-
-<<>>=
-mean(pro)   # procent poprawnej klasyfikacji
-mean(czu)   # czulosc
-mean(pre)   # precyzja
-@
-COS MI SIE TU NIE PODOBA
-
-
-
-
 
 \section{Uwaga! na nisk± jako¶æ dopasowania}
 Modele dopasowane w poprzednim podrozdziale nie s± poprawne pomimo, ¿e b³±d klasyfikacji w ka¿dym z przypadków wynosi³ po 6\%. Proszê spojrzeæ na tabelê klasyfikacyj± w ka¿dym z tych modeli:
@@ -148,21 +102,18 @@ W ka¿dym z modelu oko³o 50 przypadków wyst±pieñ silnych wstrz±sów przy nastêpnej
 rlas<-glmnet(as.matrix(se_r[,-14]), se_r[,14],  family = "binomial", alpha = 0,  lambda.min = 1e-4)
 plot(rlas)
 @
-Dzia³a powy¿ej - dodaæ sensowne komentarze :) !
-<<>>=
+Powy¿ej widaæ, które zmienne do³±czane s± w którym kroku algorytmu.
+<<echo=FALSE>>=
 #cv1 = cv.glmnet(as.matrix(se_r[,-14]), se_r[,14]) ta linijka nie dziala
-
 nsteps <- 10
 b1 <- coef(rlas)[-1, 1:nsteps]
 w <- nonzeroCoef(b1)
 b1 <- as.matrix(b1[w, ])
-
-
 matplot(1:nsteps, t(b1), type = "o", pch = 19, col = "blue", xlab = "Step", ylab = "Coefficients", lty = 1)
 title("Lasso")
 abline(h = 0, lty = 2)
 @
-Tutaj te¿ dodaæ komentarze :)
+Powy¿ej widaæ, które zmienne do³±czane s± w którym kroku algorytmu, jednak inna metod± narysowan i z inn± skal±. Teraz widaæ wiêcej.
 
 \section{Krzywa ROC i wspó³czynnik AUC dla modelu wybranego przez BIC}
 I na koniec wyznaczmy krzyw± ROC:

@@ -37,10 +37,6 @@
 \thispagestyle{fancy}
 \tableofcontents
 \thispagestyle{fancy}
-\listoffigures
-\thispagestyle{fancy}
-\listoftables
-\thispagestyle{fancy}
 <<echo=FALSE>>=
 opts_chunk$set(comment="", message=FALSE,tidy.opts=list(keep.blank.line=TRUE, width.cutoff=120),options(width=100), cache=TRUE,fig.align='center',fig.height=6, fig.width=10,fig.path='figure/beamer-',fig.show='hold',size='footnotesize', cache=TRUE)
 @
