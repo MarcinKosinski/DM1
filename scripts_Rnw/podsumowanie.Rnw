@@ -94,6 +94,11 @@ for(i in 1:il){
 \end{center}
 \end{table}
 
+Z powy¿szej tabeli widaæ wyra¼nie, ¿e najlepiej spisuje siê klasyfikator naiwnego Bayesa. Ma on najwy¿sz± precyzjê (i to znacznie wiêksz± ni¿ wszystkie pozosta³e metody!) i najwy¿sz± warto¶æ parametru AUC. Jego czu³o¶æ te¿ nale¿y raczej do tych lepszych. Niestety charakteryzuje siê jednym z najni¿szych procentów poprawnej klasyfikacji. Patrz±c jednak na precyzjê i krzyw± ROC mo¿emy zdecydowanie stwierdziæ, ¿e jest on metod±, która najlepiej stosuje siê do naszych danych. Precyzja jest tu wa¿na g³ównie ze wzglêdu na charakter naszych danch. Mianowicie zale¿y nam przede wszystkim na poprawnym wykryciu wstrz±sów sejsmicznych. Czyli lepiej jest dla nas og³osiæ fa³szywy alarm, ni¿ rzeczywistego trzêsienia nie wykryæ. 
+
+Pozosta³e metody sprawuj± siê niestety nie najlepiej (a niektóre wrêcz fatalnie!).
+
+
 \footnotetext[1]{tzn. procent poprawnej klasyfikacji}
 
 
