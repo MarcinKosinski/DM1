@@ -34,6 +34,6 @@ knn_ost$tabela <- tab
 knn_ost$procent <- procent(tab)
 knn_ost$czulosc <- czulosc(tab)
 knn_ost$precyzja <- precyzja(tab)
-knn_ost$roc <- NA
-knn_ost$auc <- NA
+knn_ost$roc <- "-"
+knn_ost$auc <- "-"
 @

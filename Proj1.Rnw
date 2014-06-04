@@ -24,6 +24,7 @@
 \usepackage{rotating}
 \usepackage{epstopdf}
 \usepackage{hyperref} %pakiet do dodawania hiper³±cz
+\usepackage{color}
 \hypersetup{colorlinks=true,
             linkcolor=blue,
             citecolor=black,

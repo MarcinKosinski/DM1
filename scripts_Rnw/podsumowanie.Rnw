@@ -23,4 +23,128 @@ legend(0.6,0.5,
 
 @
 
+\chapter{Tabela podsumowuj±ca}
+\thispagestyle{fancy}
+
+<<cache=FALSE,echo=FALSE>>=
+
+metody <- c("lda","qda","logit","bayes","knn","svm","tree","bagging",
+            "boosting","las")
+
+cechy <- c("procent","czulosc","precyzja","auc")
+cechy2 <- c("Procent \\footnotemark[1]","Czu³o¶æ","Precyzja","AUC")
+
+il <- length(metody)
+
+proc <- numeric(il)
+czul <- numeric(il)
+prec <- numeric(il)
+auce <- numeric(il)
+
+for(i in 1:il){
+   proc[i] <- formatC(get(paste(c(metody[i],"_ost"), collapse=""))$procent,
+                     digits=2, format="f")
+}
+
+for(i in 1:il){
+   czul[i] <- formatC(get(paste(c(metody[i],"_ost"), collapse=""))$czulosc,
+                     digits=2, format="f")
+}
+
+for(i in 1:il){
+   prec[i] <- formatC(get(paste(c(metody[i],"_ost"), collapse=""))$precyzja,
+                     digits=2, format="f")
+}
+
+
+for(i in 1:il){
+   auce[i] <- formatC(get(paste(c(metody[i],"_ost"), collapse=""))$auc,
+                     digits=2, format="f")
+}
+@
+
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{lrrrr}\toprule
+
+<<echo=FALSE, results='asis',cache=FALSE>>=
+for(i in 1:length(cechy)){
+   if(i==1){
+      cat("\\ &",cechy2[i],"&") 
+   } else{
+      if(i==length(cechy)){
+         cat(paste(cechy2[i],"\\\\ \\toprule \n")) 
+      } else cat(paste(cechy2[i],"&"))
+   }
+}
+
+
+for(i in 1:il){
+   if(i==4){
+      cat("\\midrule \n")
+      cat("\\textcolor{red}{",metody[i],"}&",proc[i],"&",czul[i],"&",prec[i],"&",auce[i],"\\\\ ")
+      cat("\\midrule \n")
+   }  else{
+   cat(metody[i],"&",proc[i],"&",czul[i],"&",prec[i],"&",auce[i],"\\\\ \n")}
+}
+@
+\bottomrule
+\end{tabular}
+\end{center}
+\end{table}
+
+\footnotetext[1]{tzn. procent poprawnej klasyfikacji}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

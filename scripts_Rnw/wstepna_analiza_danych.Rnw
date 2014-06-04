@@ -65,6 +65,9 @@ cor
 @
 
 \subsection{Zmienna obja¶niana}
+
+Poni¿ej widoczny jest podzia³ klas w naszym zbiorze danych:
+
 <<>>=
    summary(se[,16])
 @
