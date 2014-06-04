@@ -25,7 +25,7 @@ precyzja(tab)
 
 Pomimo do¶æ dobrej poprawnosci procentowej dopasowania, czulosc i precyzja dopasowania sa na bardzo niskim poziomie.
 
-\section{Kroswalidacja ? Mo¿e ?}
+
 
 <<echo=FALSE>>=
 knn_ost <- vector("list",6)

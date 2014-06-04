@@ -34,7 +34,40 @@
 \fancyhead[RE,LO]{\bfseries \small{Data Mining - Projekt PW 2013/2014}}
 \author{Marcin Kosiñski, Marta Sommer, \\ kosinskim@student.mini.pw.edu.pl, sommerm@student.mini.pw.edu.pl}
 \begin{document}
-\maketitle
+%% temporary titles
+% command to provide stretchy vertical space in proportion
+\newcommand\nbvspace[1][3]{\vspace*{\stretch{#1}}}
+% allow some slack to avoid under/overfull boxes
+\newcommand\nbstretchyspace{\spaceskip0.5em plus 0.25em minus 0.25em}
+% To improve spacing on titlepages
+\newcommand{\nbtitlestretch}{\spaceskip0.6em}
+\begin{center}
+\bfseries
+\nbvspace[1]
+\Huge
+{\nbtitlestretch\Huge
+ANALIZA KLASYFIKACYJNA WSTRZ¡SÓW SEJSMICZNYCH}
+
+\nbvspace[1]
+\normalsize
+
+\Large Projekt zaliczeniowy z Data Mining, 2013/14\\
+\Large Politechnika Warszawska\\
+\Large Wydzia³ Matematyki i Nauk Informacyjnych \\ \\
+\nbvspace[1]
+\small AUTORZY\\
+\huge MARCIN KOSIÑSKI, MARTA SOMMER\\[0.5em]
+\footnotesize kosinskim@student.mini.pw.edu.pl, sommerm@student.mini.pw.edu.pl\\
+Statystyka Matematyczna i Analiza Danych
+
+\nbvspace[2]
+
+\includegraphics[width=2.5in]{logos/logo_rstudio.jpg}
+\includegraphics[width=1.3in]{logos/GitHub_Logo.png}
+\includegraphics[width=1.5in]{logos/knit-logo.png}
+\normalsize
+
+\end{center}
 \thispagestyle{fancy}
 \tableofcontents
 \thispagestyle{fancy}

@@ -29,7 +29,6 @@ czulosc(tab)
 precyzja(tab)
 @
 Pomimo wysokiej czu³o¶ci i precyzji, naiwny klasyfikator bayesa ma bardzo ma³y, w porównaniu do innych klasyfikatorów uzytych w tym raporcie, procent poprawnej klasyfikacji. Jednak czu³o¶æ i precyzja s± na bardzo wysokim poziomie, w porównaniu do innych klasyfikatorów!
-\section{Kroswalidacja? MO¿e}
 \section{Krzywa ROC i wspó³czynnik AUC}
 
 I na koniec wyznaczmy krzyw± ROC:
