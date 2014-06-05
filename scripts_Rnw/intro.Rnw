@@ -3,15 +3,15 @@
 \addcontentsline{toc}{chapter}{Od autorów}
 \section*{Motywacja}
 \addcontentsline{toc}{section}{Motywacja}
-Górnictwo od zawsze by³o i nadal jest po³±czone z wyst±pieniami zagro¿eñ czêsto nazywanych górniczym hazardem. Szczególnym przypadkiem zagro¿eñ zwi±zanych z prac± w górnictwie s± wstrz±sy seismiczne, które czêsto nawiedzaj± podziemne kopalnie. Wstrz±sy seisemiczne s± najtrudniejszym do wykrycia zagro¿eniem naturalnym i czêsto s± porównywane do trzêsieñ ziemi. Coraz wiêkszy rozwój systemu monitoringu wstrz±sów seismicznych pozwoli³ na lepsze zrozumienie ruchów p³yt tektonicznych i przyczyni³ siê do powstawania metod predykcji wstrz±sów.
-\paragraph{}Jednak jak dot±d metody przewidywañ wstrz±sów maj± siê daleko od ich prawdziwego wystêpowania. Z³o¿ono¶æ procesów seismicznych i du¿a dysproporcja miêdzy liczb± wstrz±sów o ma³ym naileniu, a liczb± wstrz±sów o du¿ym nasileniu spowodw±³y ($ > 10^4J$), ¿e techniki statystyczne bywaj± niewystarczaj±ce to przewidzenia ryzyka wyst±pienia wstrz±su seisemicznego b±d¼ trzêsienia ziemi. 
-\paragraph{} Z racji na realne zagro¿enie ¿ycia ze strony wstrz±sów seismicznych, istotnym jest poszukiwanie nowych mo¿liwo¶ci lepszego wykrywania zagro¿enia, miêdzy innymi przy u¿yciu metod uczenia maszynowego. Jest to dziedzina wci±¿ rozwijana, gdy¿ obecnie u¿ywane metody s± wci±¿ niewystarczaj±ce i nie maj± odpowiedniej dok³adno¶ci i czu³o¶ci na predykcjê wystêpowania wstrz±sów seismicznych.
+Górnictwo od zawsze by³o powi±zane z niebezpieczeñstwami zwanymi zagro¿eniami górniczymi. Szczególnym przypadkiem takich zagro¿eñ s± wstrz±sy sejsmiczne, czêsto nawiedzaj±ce kopalnie g³êbinowe. Wstrz±sy sejsmiczne s± najtrudniejszym do wykrycia zagro¿eniem naturalnym, co czyni je pod tym wzglêdem porównywalnymi do trzêsieñ ziemi. Coraz wiêkszy poziom zaawansowania systemów monitorowania wstrz±sów i akustyki wstrz±sów pozwala nam bardziej dog³êbnie zrozumieæ naturê ruchów tektonicznych i okre¶liæ metody przewidywania wstrz±sów. 
+\paragraph{}Dok³adno¶æ takich metod pozostawia jednak jak dot±d wiele do ¿yczenia. Niedostateczna precyzja metod statystycznych spowodowana jest z³o¿ono¶ci± procesów tektonicznych, jak równie¿ du¿± rozbie¿no¶ci± miêdzy liczb± wstrz±sów o niskiej magnitudzie a liczb± wstrz±sów o wysokiej magnitudzie (np. wstrz±sów o energii przekraczaj±cej $10^4 J$). W rezultacie istniej±ce metody statystyczne bywaj± niewystarczaj±ce do dok³adnego przewidywania wstrz±sów.
+\paragraph{}Z uwagi na realne zagro¿enie ¿ycia spowodowane wstrz±sami sejsmicznymi istotne jest poszukiwanie nowych sposobów lepszego wykrywania niebezpieczeñstw - miêdzy innymi za pomoc± metod uczenia maszynowego. Uczenie maszynowe jest w sejsmologii dziedzin± wci±¿ rozwijaj±c± siê, gdy¿ obecnie stosowane metody nie s± do¶æ czu³e i nie pozwalaj± na przewidywanie zagro¿eñ sejsmicznych z wystarczaj±c± dok³adno¶ci±.
 \paragraph{}
-Odpowiednio dobra predykcja wzrostu aktywno¶ci seismicznej jest nies³ychanie istotna w problemach praktycznych. Dlatego zdecydowwali¶my przyjrzeæ sie zbiorowi danych dotycz±cemu realnych problemów z który zmaga siê ¶wiat i wspó³czesna statystyka stosowana.
+Precyzyjna prognoza wzrostu aktywno¶ci tektonicznej jest niezwykle istotna w praktycznym zapobieganiu zagro¿eniom. Dlatego w³a¶nie postanowili¶my przyjrzeæ siê zestawowi danych dotycz±cych prawdziwych problemów sejsmologicznych, z którymi zmaga siê wspó³czesna statystyka stosowana.
 \newpage
 \section*{Opis zmiennych w zbiorze}
 \addcontentsline{toc}{section}{Opis zmiennych w zbiorze}
-Zbiór u¿yty do analizy cechuje siê niezbalansowanym rozk³adem przypadków wystêpowania i braku wystêpowania cechy, dla której ma byæ zadana predykcja. Na blisko ponad 2000 przypadków, tylko 170 to przypadki reprezentuj±ce klasê 1. Bêdzie to g³ówny problem przewijaj±cy siê w ca³ej analizie danych.
+Zbiór wykorzystany w analizie cechuje siê niezbalansowanym rozk³adem przypadków wystêpowania i braku wystêpowania cechy, dla której ma byæ zadana predykcja. Na blisko ponad $2000$ przypadków tylko $170$ reprezentuje klasê $1$. Bêdzie to g³ówny problem, przewijaj±cy siê przez ca³y proces analizy danych.
 
 \begin{table}[h]
 \label{tab:opis2}
@@ -20,25 +20,25 @@ Zbiór u¿yty do analizy cechuje siê niezbalansowanym rozk³adem przypadków wystêpo
 \begin{tabular}{lp{10cm}}
 \toprule%
 Zmienna  &  Opis \\ \toprule%
-seismic  &  wynik oceny zagro¿enia sejsmicznego na zmianie oszacowany metod± \texttt{seismic}   \\ 
-seismoacoustic  &  wynik oceny zmiany zagro¿enia sejsmicznego na zmianie oszacowany metod± \texttt{seismoacoustic}   \\ 
-shift & informacja na temat typu zmiany, (W - bior±cych wêgiel, N - ekipa techniczna) \\
-genergy & energia seismiczna zarejestrowana\footnotemark[1] przez najbardziej aktywny geofon (GMax) spo¶ród geofonów monitoruj±cych tunel \\
+seismic  &  wynik oceny zagro¿enia sejsmicznego w czasie danej zmiany oszacowanego metod± pomiarów sejsmicznych (a - brak zagro¿enia, b - niski poziom zagro¿enia, c - wysoki poziom zagro¿enia, d - niebezpieczeñstwo wstrz±su)   \\ 
+seismoacoustic  &  wynik oceny zagro¿enia sejsmicznego w czasie danej zmiany oszacowanego metod± pomiarów sejsmoakustycznych   \\ 
+shift & informacja na temat typu zmiany, (W - ekipa wydobywaj±ca wêgiel, N - zmiana przygotowawcza) \\
+genergy & poziom energii sejsmicznej zarejestrowany przez najbardziej aktywny (GMax) spo¶ród geofonów monitoruj±cych tunel \\
 gpuls & liczba drgañ zarejestrowana\footnotemark[1] przez Gmax \\
-gdenergy & odchylenie energii zarejestrowanej\footnotemark[1] przez Gmax od ¶redniej energii zarejestrowanej podczas ostatnich 8 zmian \\
-gdpuls & odchylenie liczby drgañ zarejestrowanej\footnotemark[1] przez Gmax od ¶redniej liczby drgañ zarejestrowanej podczas ostatnich 8 zmian \\
-ghazard & wynik oceny zmiany zagro¿enia sejsmicznego na zmianie oszacowany metod± \texttt{seismoacoustic} tylko z geofonu Gmax \\
-nbumps & liczba wstrzasów seismicznych\footnotemark[1] \\ 
-nbumps2 & liczba wstrzasów seismicznych\footnotemark[1] w zakresie $[10^2,10^{3})$  \\
-nbumps3 & liczba wstrzasów seismicznych\footnotemark[1] w zakresie $[10^3,10^{4})$  \\
-nbumps4 & liczba wstrzasów seismicznych\footnotemark[1] w zakresie $[10^4,10^{5})$  \\
-nbumps5 & liczba wstrzasów seismicznych\footnotemark[1] w zakresie $[10^5,10^{6})$  \\
-nbumps6 & liczba wstrzasów seismicznych\footnotemark[1] w zakresie $[10^6,10^{7})$  \\
-nbumps7 & liczba wstrzasów seismicznych\footnotemark[1] w zakresie $[10^7,10^{8})$ \\
-nbumps89 & liczba wstrzasów seismicznych\footnotemark[1] w zakresie $[10^8,10^{10})$  \\
-energy & ca³kowita energia wstrz±sów seismicznych\footnotemark[1] \\
-maxenergy & ca³kowita energia wstrz±sów seismicznych\footnotemark[1] \\
-class & czy wyst±pi³ silny wstrz±s podczas nastêpnej wizyty \\ \bottomrule
+gdenergy & odchylenie poziomu energii zarejestrowanej\footnotemark[1] przez Gmax od ¶redniej zarejestrowanej podczas ostatnich 8 zmian \\
+gdpuls & odchylenie liczby drgañ zarejestrowanej\footnotemark[1] przez Gmax od ¶redniej zarejestrowanej podczas ostatnich 8 zmian \\
+ghazard & wynik oceny zmiany zagro¿enia sejsmicznego na zmianie oszacowany metod± \texttt{seismoacoustic} tylko przez geofonu Gmax \\
+nbumps & liczba t±pniêæ sejsmicznych\footnotemark[1] \\ 
+nbumps2 & liczba t±pniêæ sejsmicznych\footnotemark[1] w zakresie $[10^2,10^{3})$  \\
+nbumps3 & liczba t±pniêæ sejsmicznych\footnotemark[1] w zakresie $[10^3,10^{4})$  \\
+nbumps4 & liczba t±pniêæ sejsmicznych\footnotemark[1] w zakresie $[10^4,10^{5})$  \\
+nbumps5 & liczba t±pniêæ sejsmicznych\footnotemark[1] w zakresie $[10^5,10^{6})$  \\
+nbumps6 & liczba t±pniêæ sejsmicznych\footnotemark[1] w zakresie $[10^6,10^{7})$  \\
+nbumps7 & liczba t±pniêæ sejsmicznych\footnotemark[1] w zakresie $[10^7,10^{8})$ \\
+nbumps89 & liczba t±pniêæ sejsmicznych\footnotemark[1] w zakresie $[10^8,10^{10})$  \\
+energy & ca³kowita energia t±pniêæ sejsmicznych\footnotemark[1] \\
+maxenergy & maksymalna energia t±pniêæ sejsmicznych\footnotemark[1] \\
+class & zmienna decyzyjna -- czy na kolejnej zmianie wyst±pi silne t±pniêcie  \\ \bottomrule
 \end{tabular}
 
 <<>>=

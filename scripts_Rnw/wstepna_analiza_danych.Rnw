@@ -53,7 +53,7 @@ cat("¦rednia&",paste(m, collapse="&") )
 \\ \bottomrule
 \end{tabular}
 \end{center}
-\caption[Podstawowe statystyki agreguj±ce dla zmiennych ci±g³ych.]{Podstawowe statystyki agreguj±ce dla zmiennych ci±g³ych.}
+\caption[Podstawowe statystyki agreguj±ce dla zmiennych ci±g³ych]{Podstawowe statystyki agreguj±ce dla zmiennych ci±g³ych.}
 \end{table}
 
 \subsection{Korelacja miêdzy zmiennymi ci±g³ymi}
@@ -74,11 +74,11 @@ Poni¿ej widoczny jest podzia³ klas w naszym zbiorze danych:
 
 \section{Usuniêcie braków danych, wstêpna selekcja}
 
-W naszych danych nie wystêpuj± braki danych.
+W naszym zbiorze nie wystêpuj± braki danych.
 
 \bigskip
 
-Na pierwszy rzut oka widaæ, ¿e niektóre zmienne s± zupe³nie nieistotne lub bardzo ze sob± skorelowane, dlatego chcieliby¶my wy³±czyæ je od razu z analizy. Przyjrzyjmy siê naszym danym:
+Na pierwszy rzut oka widaæ, ¿e niektóre zmienne s± zupe³nie nieistotne lub bardzo ze sob± skorelowane, dlatego chcieliby¶my od razu usun±æ je z analizy. Przyjrzyjmy siê naszym danym:
    
 <<echo=FALSE,cache=TRUE>>=
 library("foreign")
@@ -89,7 +89,7 @@ head(se,3)
 
 \bigskip
 
-Zacznijmy od zmiennych \textit{nbumps6, nbumps7} oraz \textit{nbumps89}. S± to zmienne ilo¶ciowe, wszystkie jednak przyjmuj± warto¶æ zero. Niczego wiêc nie wnosz± one do naszej analizy. Zast±pmy je wiêc przez zmienn± \textit{nbumps5} (a raczej rozszerzmy definicjê zmiennej \textit{nbumps5}), która bêdzie od tej pory definiowaæ liczbê wstrzasów seismicznych w zakresie $[10^5,10^{10})$. Z analizy wyrzucimy równie¿ zmienn± \textit{maxenergy}, która wydaje siê silnie zale¿na od zmiennej \textit{energy}.
+Zacznijmy od zmiennych \textit{nbumps6, nbumps7} oraz \textit{nbumps89}. S± to zmienne ilo¶ciowe, wszystkie jednak przyjmuj± warto¶æ zero. Niczego wiêc nie wnosz± one do naszej analizy. Zast±pmy je wiêc przez zmienn± \textit{nbumps5} (a raczej rozszerzmy definicjê zmiennej \textit{nbumps5}), która bêdzie od tej pory definiowaæ liczbê wstrzasów sejsmicznych w zakresie $[10^5,10^{10})$. Z analizy wyrzucimy równie¿ zmienn± \textit{maxenergy}, która wydaje siê silnie zale¿na od zmiennej \textit{energy}.
 
 \bigskip
 
@@ -99,7 +99,7 @@ Kolejn± zmienn±, któr± usuniemy z analizy bêdzie zmienna \textit{nbumps}, która 
 
 Zajmijmy siê jeszcze zmiennymi nominalnymi. Niestety nie ka¿da metoda, któr± bêdziemy stosowaæ do analizy (np. QDA) dobrze sobie z nimi radzi. Bêdziemy wiêc pracowaæ na dwóch zestawach danych. Tam, gdzie siê da, bêdziemy korzystaæ z danych oryginalnych. W reszcie metod zamienimy sobie dane nominalny na dane ilo¶ciowe w nastêpuj±cy sposób:
    
-Zmienn± \textit{seismic} przyjmuj±c± warto¶ci ze zbioru ${a,b,c,d}$ zamienimy na zmienn± \textit{seismic2} przyjmu±c± warto¶ci ${0,1,2,3}$. W analogiczny sposób zamienimy zmienn± \textit{sesismoacoustic} na zmienn± \textit{sesismoacoustic2} oraz zmienn± \textit{ghazard} na zmienn± \textit{ghazard2}. Mo¿emy tak zrobiæ, gdy¿ ich warto¶ci reprezentuj± pewien porz±dek (a - ma³e, d - du¿e). Tak nie jest niestety w przypadku zmiennej \textit{shift}. Dlatego dla niej stworzymy zmienn± indykatorow± \textit{shift2} równ± $1$, gdy na zmianie byli górnicy, a $0$, gdy na zmianie byli naukowcy. 
+Zmienn± \textit{seismic} przyjmuj±c± warto¶ci ze zbioru $\lbrace a,b,c,d\rbrace$ zamienimy na zmienn± \textit{seismic2} przyjmu±c± warto¶ci $\lbrace 0,1,2,3\rbrace$. W analogiczny sposób zamienimy zmienn± \textit{sesismoacoustic} na zmienn± \textit{sesismoacoustic2} oraz zmienn± \textit{ghazard} na zmienn± \textit{ghazard2}. Mo¿emy tak zrobiæ, gdy¿ ich warto¶ci reprezentuj± pewien porz±dek (a - ma³e, d - du¿e). Tak nie jest niestety w przypadku zmiennej \textit{shift}. Dlatego dla niej stworzymy zmienn± indykatorow± \textit{shift2} równ± $1$, gdy na zmianie byli górnicy, a $0$, gdy na zmianie by³a ekipa przygotowawcza. 
 
 \bigskip
 

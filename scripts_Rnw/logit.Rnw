@@ -1,25 +1,25 @@
 \chapter{Regresja logistyczna i regularyzacja}
 \thispagestyle{fancy}
 \section{Model pe³ny}
-Po wybraniu zbioru testowego i treningowego w proporcjach 1:2 przeprowadzono regresjê logistyczn± i wywo³ano podsumowanie pe³nego modelu regresji logistycznej.
+Po wybraniu zbioru testowego i treningowego w proporcjach 1:2 przeprowadzono regresjê logistyczn±:
 <<cache=FALSE>>=
 Se.logit  <-  glm(class~.,data=Train,family="binomial")
 @
 Przy tak ustawionym ziarnie losowania \texttt{set.seed(456)} istotnymi zmiennymi w modelu s± zmienne shift w grupie \texttt{W} oraz zmienne \texttt{gpuls}, \texttt{nbumps2} i \texttt{nbump3}. Przy niektórych innych ziarnach równie¿ istotn± zmienna w modelu by³ \texttt{genergy} - co widaæ po ma³ej warto¶ci krytycznej-p.
 \section{Modele oparte o kryteria informacyjne}
-Korzystaj±c z funkcji \texttt{step()} wyliczono modele oparte oraz kryteria informacyjne AIC o BIC.
+Korzystaj±c z funkcji \texttt{step()} wyliczono modele oparte o kryteria informacyjne AIC oraz BIC.
 \subsection{Kryterium AIC}
 Stosuj±c metodê wsteczn± otrzymano model:
-<<results='hide',cache=TRUE>>=
+<<results='hide',cache=TRUE, echo=FALSE>>=
 Se.logit.aic  <-  step(Se.logit,direction="backward",k=2)
 @
 <<echo=FALSE,cache=TRUE>>=
 Se.logit.aic$formula
 @
-Kryterium oparte o AIC wybra³o zmienne, które by³y istotne w modelu pe³nym, oraz dodatkowo zmienne, których p-warto¶ci by³y bliskie $0.05$. Jako ¿e kryterium AIC jest konserwatywne i nie odrzuca zmiennych, nie dziwne, ¿e w modelu zosta³y uwzglêdnione równie¿ zmienne o p-warto¶ci zbli¿onej do $0.05$.
+Kryterium oparte o AIC wybra³o zmienne, które by³y istotne w modelu pe³nym oraz dodatkowo zmienne, których p-warto¶ci by³y bliskie $0.05$. Jako ¿e kryterium AIC jest konserwatywne i nie odrzuca zmiennych, nie dziwne, ¿e w modelu zosta³y uwzglêdnione równie¿ zmienne o p-warto¶ci zbli¿onej do $0.05$.
 \subsection{Kryterium BIC}
 Stosuj±c metodê wsteczn± otrzymano model:
-<<results='hide',cache=TRUE>>=
+<<results='hide',cache=TRUE, echo=FALSE>>=
 Se.logit.bic  <-  step(Se.logit,direction="backward",k=log(nrow(se_wyb)))
 @
 <<echo=FALSE,cache=TRUE>>=

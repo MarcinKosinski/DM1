@@ -51,7 +51,7 @@ ANALIZA KLASYFIKACYJNA WSTRZ¡SÓW SEJSMICZNYCH}
 \nbvspace[1]
 \normalsize
 
-\Large Projekt zaliczeniowy z Data Mining, 2013/14\\
+\Large Projekt zaliczeniowy z przedmiotu Data Mining, 2013/14\\
 \Large Politechnika Warszawska\\
 \Large Wydzia³ Matematyki i Nauk Informacyjnych \\ \\
 \nbvspace[1]
