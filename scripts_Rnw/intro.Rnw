@@ -50,8 +50,13 @@ class & zmienna decyzyjna -- czy na kolejnej zmianie wyst±pi silne t±pniêcie  \\
 \footnotetext[1]{Zarejestrowana podczas poprzedniej zmiany}
 
 
-
+\newpage
 \section*{Szczegó³y techniczne pracy}
+Analiza zosta³a przeprowadzona w pakiecie statystycznym R, wersja 3.1.0. Tekst raportu zosta³ z³o¿ony przy pomocy pakietu knitr, który umo¿liwia za³±czanie wyników i rezultatów z funkcji R w programie do sk³adu publikacji LaTeX. Projekt zosta³ przeprowadzony przy wsparciu systemu kontroli wersji Git, który czuwa³ nad integracj± plików i optymalizacj± pracy zespo³owej. Korzy¶æ z zastosowania takiego rozwi±zania techonologicznego by³a taka, ¿e w dwie osoby mogli¶my wspólnie pracowaæ na wielu plikach \textttt{.Rnw} jednocze¶nie bez konfliktów i z mo¿lisie szybkim przekazem plików. Do po³±czenia pakietu R z systemem kontroli wersji Git wykorzystano pakiet \texttt{devtools}, wspomagaj±cy integracjê pakietu R z GitHubem (\href{https://github.com}{https://github.com}). Ostatecznie dziêki systemowi kontroli wersji mo¿na ¶ledzic postêpy w pracach i zaanga¿owanie poszczególnych osób w sukces projektu. Poni¿ej screen z aktywno¶ci przy obecnym projekcie:
+\begin{figure}[h!]
+\includegraphics[width=\textwidth]{aktywnosc.png}
+\end{figure}
+\paragraph{} Repozytorium, w którym dostêpne s± wszystkie pliki jest dostêpne pod adresem:  \href{https://github.com/MarcinKosinski/DM1}{https://github.com/MarcinKosinski/DM1}.
 \addcontentsline{toc}{section}{Szczegó³y techniczne pracy}
 
 
