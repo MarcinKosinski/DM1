@@ -119,13 +119,13 @@ Powy¿ej widaæ, które zmienne do³±czane s± w którym kroku algorytmu, jednak inna 
 I na koniec wyznaczmy krzyw± ROC:
 
 <<echo=FALSE,fig.align='center',fig.height=6, fig.width=10>>=
-roc(Pred.bic, Test$class)
+roc(P.bic, Test$class)
 @
 
 Wspó³czynnik AUC wynosi:
 
 <<echo=FALSE>>=
-auc(Pred.bic, Test$class)
+auc(P.bic, Test$class)
 @
 
 
@@ -137,7 +137,7 @@ logit_ost$tabela <- tab
 logit_ost$procent <- procent(tab)
 logit_ost$czulosc <- czulosc(tab)
 logit_ost$precyzja <- precyzja(tab)
-logit_ost$roc <- list(Pred.bic, Test$class) 
-logit_ost$auc <- auc(Pred.bic, Test$class)
+logit_ost$roc <- list(P.bic, Test$class) 
+logit_ost$auc <- auc(P.bic, Test$class)
 @
 
